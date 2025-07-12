@@ -1,0 +1,41 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+# YAML files
+[*.yml]
+indent_style = space
+indent_size = 2
+
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+[*.{js,ts,jsx,tsx}]
+indent_style = space
+indent_size = 2
+
+[*.vue]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+[*.{css,scss,sass}]
+indent_style = space
+indent_size = 2
