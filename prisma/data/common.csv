@@ -1,0 +1,6 @@
+key,name,cd,value,display_order,extra_1,extra_2,extra_3,extra_4,extra_5
+0000000001,Payment status,0,Chưa thanh toán,0,,,,,
+0000000001,Payment status,1,Đã thanh toán,1,,,,,
+0000000001,Payment status,2,Thanh toán 1 phần,2,,,,,
+0000000002,Warranty period,0,3 tháng,0,,,,,
+0000000002,Warranty period,1,6 tháng,1,,,,,

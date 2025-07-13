@@ -32,3 +32,10 @@ $ yarn build:mac
 # For Linux
 $ yarn build:linux
 ```
+
+### Prisma
+
+```bash
+$ npx prisma generate
+$ npx prisma migrate dev --name ${name}
+```

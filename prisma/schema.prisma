@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Common {
+  id            Int       @id @default(autoincrement())
+  key           String
+  name          String
+  cd            Int
+  value         String
+  display_order Int
+  extra_1       String?
+  extra_2       String?
+  extra_3       String?
+  extra_4       String?
+  extra_5       String?
+  deleted_at    DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now()) @updatedAt
+}
+
+model Customer {
+  id         Int       @id @default(autoincrement())
+  name       String
+  phone      String
+  address    String?
+  deleted_at DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now()) @updatedAt
+  Repair     Repair[]
+}
+
+model Repair {
+  id              Int        @id @default(autoincrement())
+  repair_date     DateTime
+  finish_date     DateTime?
+  customer        Customer?  @relation(fields: [customer_id], references: [id])
+  customer_id     Int?
+  description     String
+  cost            Float
+  payment_status  Int        @default(0) // 0: unpaid, 1: paid, 2: partial
+  warranty_period Int? // 0: 3 months, 1: 6 months
+  deleted_at      DateTime?
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @default(now()) @updatedAt
+  Payment         Payment[]
+  Warranty        Warranty[]
+}
+
+model Payment {
+  id             Int       @id @default(autoincrement())
+  repair         Repair    @relation(fields: [repair_id], references: [id])
+  repair_id      Int
+  payment_method Int // 0: cash, 1: online
+  payment_amount Float
+  payment_date   DateTime
+  deleted_at     DateTime?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now()) @updatedAt
+}
+
+model Warranty {
+  id            Int       @id @default(autoincrement())
+  repair        Repair    @relation(fields: [repair_id], references: [id])
+  repair_id     Int
+  warranty_date DateTime
+  description   String
+  deleted_at    DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now()) @updatedAt
+}
