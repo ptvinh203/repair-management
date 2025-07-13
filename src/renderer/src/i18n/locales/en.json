@@ -1,0 +1,21 @@
+{
+  "repair": {
+    "create": {
+      "warrantyOptions": {
+        "3months": "3 months",
+        "6months": "6 months"
+      }
+    },
+    "update": {
+      "warrantyOptions": {
+        "1month": "1 month",
+        "3months": "3 months",
+        "6months": "6 months",
+        "12months": "12 months"
+      }
+    }
+  },
+  "common": {
+    "selectOption": "Select an option"
+  }
+}

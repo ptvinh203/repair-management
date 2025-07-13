@@ -1,0 +1,32 @@
+// Custom Bootstrap variables must be declared before importing Bootstrap
+$primary: #3498db;
+$secondary: #95a5a6;
+
+// Custom button hover states
+$btn-hover-bg-shade-amount: 15%;
+$btn-hover-bg-tint-amount: 15%;
+$btn-hover-border-shade-amount: 20%;
+$btn-hover-border-tint-amount: 10%;
+
+// Import Bootstrap SCSS to use its functions
+@use "sass:color";
+@import "bootstrap/dist/css/bootstrap.css";
+
+// Custom button hover states
+.btn-primary {
+  background-color: red;
+
+  &:hover,
+  &:focus {
+    background-color: #2980b9;
+    border-color: color.scale(#2980b9, $lightness: -5%);
+  }
+}
+
+.btn-secondary {
+  &:hover,
+  &:focus {
+    background-color: #7f8c8d;
+    border-color: color.scale(#7f8c8d, $lightness: -5%);
+  }
+}

@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <h1>Welcome to the App</h1>
+  <div class="min-vh-100 bg-light">
+    <Header />
+
+    <router-view />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Header from '@renderer/components/nav/Header.vue'
+</script>
