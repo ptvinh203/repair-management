@@ -6,21 +6,18 @@
     </div>
 
     <!-- Card Body - Form Content -->
-    <div class="card-body border-bottom-0 pb-0">
+    <div class="card-body border-bottom-0">
       <slot></slot>
     </div>
 
     <!-- Card Footer - Action Buttons -->
-    <div class="card-footer bg-white border-top-0 d-flex justify-content-end gap-2">
-      <!-- Extra Buttons Slot -->
-      <template v-if="extraButtons && extraButtons.length > 0">
-        <component :is="button" v-for="(button, index) in extraButtons" :key="index" />
-      </template>
+    <div class="card-footer bg-white border-top-0 d-flex justify-content-end gap-2 pt-0">
+      <slot name="extra-buttons" />
 
       <!-- Default Search Button -->
       <AppButton
         v-if="showDefaultButton"
-        :title="$t('dashboard.search.search')"
+        :title="$t('common.search')"
         button-class="btn-primary"
         @click="handleSearch"
       />
@@ -29,14 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import { VNode } from 'vue'
 import AppButton from '@renderer/components/form/AppButton.vue'
 
 interface SearchWrapperProps {
   title: string
   showDefaultButton?: boolean
   wrapperClass?: string
-  extraButtons?: VNode[]
 }
 
 withDefaults(defineProps<SearchWrapperProps>(), {

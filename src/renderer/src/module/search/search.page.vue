@@ -1,25 +1,20 @@
 <template>
   <div class="container-fluid py-3">
-    <SearchWrapper
-      :title="$t('dashboard.search.title')"
-      class="mb-3"
-      :extra-buttons="extraSearchButtons"
-      @on-search="handleSearch"
-    >
+    <SearchWrapper :title="$t(`${PATH_LANG}.search.title`)" class="mb-3" @on-search="onSearch">
       <div class="row g-3">
         <div class="col-md-6">
           <AppInput
             v-model="searchData.customerSearch"
             type="text"
             name="customerSearch"
-            :label="$t('dashboard.search.customerLabel')"
-            :placeholder="$t('dashboard.search.customerPlaceholder')"
+            :label="$t(`${PATH_LANG}.search.customer-label`)"
+            :placeholder="$t(`${PATH_LANG}.search.customer-placeholder`)"
             :has-margin="false"
           />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label">{{ $t('dashboard.search.dateRange') }}</label>
+          <label class="form-label">{{ $t(`${PATH_LANG}.search.date-range`) }}</label>
           <div class="d-flex align-items-center gap-2">
             <input
               v-model="searchData.startDate"
@@ -32,51 +27,34 @@
           </div>
         </div>
       </div>
+
+      <template #extra-buttons>
+        <AppButton :title="$t(`${PATH_LANG}.search.export`)" @click="handleExport" />
+      </template>
     </SearchWrapper>
 
-    <div>
-      <CardWrapper
-        :title="$t('dashboard.results.title')"
-        body-class="p-0"
-        header-class="d-flex justify-content-between align-items-center"
-      >
-        <template #default>
-          <div class="table-responsive">
-            <table id="resultsTable" class="table table-hover mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th scope="col">{{ $t('dashboard.results.table.no') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.repairDate') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.description') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.technician') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.amount') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.paymentStatus') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.warranty') }}</th>
-                  <th scope="col">{{ $t('dashboard.results.table.actions') }}</th>
-                </tr>
-              </thead>
-              <tbody id="resultsTableBody"></tbody>
-            </table>
-          </div>
-
-          <div id="noResults" class="d-none p-4 text-center">
-            <p class="text-muted mb-0">{{ $t('dashboard.results.noResults') }}</p>
-          </div>
-        </template>
-      </CardWrapper>
-    </div>
+    <Table key-loading="REPAIR_SEARCH_RESULT" :headers="TABLE_HEADERS" :data="[]">
+      <template #cell-actions="">
+        <div class="d-flex justify-content-center gap-2"></div>
+      </template>
+    </Table>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, h } from 'vue'
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import AppButton from '@renderer/components/form/AppButton.vue'
 import AppInput from '@renderer/components/form/AppInput.vue'
 import SearchWrapper from '@renderer/components/wrapper/SearchWrapper.vue'
-import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'
-import { useI18n } from 'vue-i18n'
+import Table from '@renderer/components/table/Table.vue'
+import { useSearchStore } from './search.store'
+import type { ITableHeader } from '@renderer/components/table/table.tyle'
 
 const { t } = useI18n()
+const PATH_LANG = 'search'
+
+const { handleSearch } = useSearchStore()
 
 const searchData = ref({
   customerSearch: '',
@@ -84,19 +62,62 @@ const searchData = ref({
   endDate: ''
 })
 
-const handleExport = (): void => {
-  console.log('Export clicked')
-}
-
-const extraSearchButtons = [
-  h(AppButton, {
-    title: t('dashboard.search.export'),
-    onClick: handleExport
-  })
+const TABLE_HEADERS: ITableHeader[] = [
+  {
+    label: t(`${PATH_LANG}.results.table.no`),
+    key: 'no',
+    width: 50,
+    align: 'center'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.repair-date`),
+    key: 'repairDate',
+    width: 80,
+    align: 'left'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.description`),
+    key: 'description',
+    width: 200,
+    align: 'left'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.technician`),
+    key: 'technician',
+    width: 120,
+    align: 'left'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.amount`),
+    key: 'amount',
+    width: 80,
+    align: 'right'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.payment-status`),
+    key: 'paymentStatus',
+    width: 80,
+    align: 'center'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.warranty`),
+    key: 'warranty',
+    width: 80,
+    align: 'center'
+  },
+  {
+    label: t(`${PATH_LANG}.results.table.actions`),
+    key: '',
+    width: 100,
+    align: 'center',
+    sticky: true
+  }
 ]
 
-const handleSearch = (): void => {
-  console.log('Search clicked with data:', searchData.value)
+const handleExport = (): void => {}
+
+const onSearch = () => {
+  handleSearch()
 }
 </script>
 

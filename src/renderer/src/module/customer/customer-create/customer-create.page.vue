@@ -42,7 +42,7 @@
       </div>
 
       <div class="col-lg-6">
-        <CardWrapper :title="$t('customer.create.recentCustomers')" body-class="p-0">
+        <CardWrapper :title="$t('customer.create.recent-customers')" body-class="p-0">
           <div class="table-responsive">
             <table class="table table-hover mb-0">
               <thead class="table-light">

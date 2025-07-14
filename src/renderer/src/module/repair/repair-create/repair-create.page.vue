@@ -2,12 +2,12 @@
   <div class="container-fluid py-3">
     <div class="row g-3">
       <div class="col-lg-6">
-        <CardWrapper :title="$t('repair.create.basicInfo')">
+        <CardWrapper :title="$t('repair.create.basic-info')">
           <AppInput
             v-model="repairData.repairDate"
             type="date"
             name="repairDate"
-            :label="$t('repair.create.form.repairDate')"
+            :label="$t('repair.create.form.repair-date')"
             :is-required="true"
           />
 
@@ -15,7 +15,7 @@
             v-model="repairData.completionDate"
             type="date"
             name="completionDate"
-            :label="$t('repair.create.form.completionDate')"
+            :label="$t('repair.create.form.completion-date')"
           />
 
           <AppInput
@@ -49,7 +49,7 @@
           <AppSelect
             v-model="repairData.warrantyDuration"
             name="warrantyDuration"
-            :label="$t('repair.create.form.warrantyDuration')"
+            :label="$t('repair.create.form.warranty-duration')"
             :is-required="false"
             :options="warrantyOptions"
             :has-blank-option="false"
@@ -127,8 +127,8 @@ const repairData = ref({
 })
 
 const warrantyOptions = computed(() => [
-  { key: t('repair.create.warrantyOptions.3months'), value: '3' },
-  { key: t('repair.create.warrantyOptions.6months'), value: '6' }
+  { key: t('repair.create.warranty-options.3-months'), value: '3' },
+  { key: t('repair.create.warranty-options.6-months'), value: '6' }
 ])
 </script>
 

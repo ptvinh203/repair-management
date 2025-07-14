@@ -12,6 +12,7 @@
       :required="isRequired"
       :rows="rows"
       :class="['form-control', textareaClass]"
+      :placeholder="placeholder || $t('common.placeholder', { field: label.toLocaleLowerCase() })"
       @input="handleInput"
     ></textarea>
   </div>
@@ -20,22 +21,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface AppTextareaProps {
-  label: string
-  isRequired?: boolean
-  name?: string
-  textareaClass?: string
-  value?: string
-  rows?: number
-}
-
-const props = withDefaults(defineProps<AppTextareaProps>(), {
-  isRequired: false,
-  name: '',
-  textareaClass: '',
-  value: '',
-  rows: 3
-})
+const props = withDefaults(
+  defineProps<{
+    label: string
+    isRequired?: boolean
+    name?: string
+    textareaClass?: string
+    value?: string
+    rows?: number
+    placeholder?: string
+  }>(),
+  {
+    isRequired: false,
+    rows: 3
+  }
+)
 
 const emit = defineEmits<{
   'update:value': [value: string]

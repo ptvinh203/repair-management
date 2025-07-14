@@ -12,6 +12,7 @@
       :value="value"
       :required="isRequired"
       :class="['form-control', inputClass]"
+      :placeholder="placeholder || $t('common.placeholder', { field: label.toLocaleLowerCase() })"
       @input="handleInput"
     />
   </div>
@@ -20,24 +21,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-interface AppInputProps {
-  label: string
-  isRequired?: boolean
-  type?: string
-  name?: string
-  value?: string | number
-  inputClass?: string
-  hasMargin?: boolean
-}
-
-const props = withDefaults(defineProps<AppInputProps>(), {
-  isRequired: false,
-  type: 'text',
-  name: '',
-  value: '',
-  inputClass: '',
-  hasMargin: true
-})
+const props = withDefaults(
+  defineProps<{
+    label: string
+    isRequired?: boolean
+    type?: string
+    name?: string
+    value?: string | number
+    inputClass?: string
+    hasMargin?: boolean
+    placeholder?: string
+  }>(),
+  {
+    isRequired: false,
+    type: 'text',
+    hasMargin: true
+  }
+)
 
 const emit = defineEmits<{
   'update:value': [value: string | number]

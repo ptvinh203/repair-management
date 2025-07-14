@@ -1,8 +1,8 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 const searchRoute: RouteRecordRaw = {
   path: '/search',
-  name: 'search-route',
+  name: 'search',
   component: () => import('./search.page.vue')
 }
 

@@ -20,7 +20,7 @@
             class="nav-link text-white"
             :class="{ active: $route.path === '/customer/create' }"
           >
-            {{ $t('navigation.addCustomer') }}
+            {{ $t('navigation.add-customer') }}
           </router-link>
         </li>
         <li class="nav-item">
@@ -29,7 +29,7 @@
             class="nav-link text-white"
             :class="{ active: $route.path === '/repair/create' }"
           >
-            {{ $t('navigation.addRepair') }}
+            {{ $t('navigation.add-repair') }}
           </router-link>
         </li>
       </ul>
@@ -41,7 +41,7 @@
 
 <style scoped lang="scss">
 .navbar {
-  background: linear-gradient(135deg, #2c3e50, #3498db);
+  background: #2c3e50;
 
   .nav-item {
     color: white;
