@@ -1,4 +1,3 @@
-export type MasterEventChannel = 'master:get'
-export type MasterEventPayloadMapping = {
+export type MasterEventChannel = {
   'master:get': object
 }

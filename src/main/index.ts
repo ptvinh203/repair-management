@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { masterService } from '@preload/service/master.service'
+import { initIpcMainHandlers } from '@main/ipc-main-init'
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -23,6 +24,7 @@ function createWindow(): void {
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
+
     return { action: 'deny' }
   })
 
@@ -42,9 +44,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
+  initIpcMainHandlers()
   createWindow()
 
   app.on('activate', function () {

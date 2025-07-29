@@ -17,13 +17,14 @@
           @click="close"
         ></button>
       </div>
-      <div class="toast-body">{{ message }}</div>
+      <div class="toast-body">{{ displayMessage }}</div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { ToastType } from '.'
 
 const props = withDefaults(
@@ -31,15 +32,23 @@ const props = withDefaults(
     message: string
     type: ToastType
     duration?: number
+    useI18nKey?: boolean
   }>(),
   {
-    duration: 3000
+    duration: 3000,
+    useI18nKey: false
   }
 )
 
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+const { t } = useI18n()
+
+const displayMessage = computed(() => {
+  return props.useI18nKey ? t(props.message) : props.message
+})
 
 const toastClass = {
   'bg-info text-white': props.type === 'info',

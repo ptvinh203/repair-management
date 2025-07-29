@@ -33,6 +33,7 @@ class MasterService extends AbstractService {
 
       const commonData = dataLines.map((line) => {
         const columns = line.split(',')
+
         return {
           key: columns[0],
           name: columns[1],

@@ -1,9 +1,14 @@
 import { contextBridge } from 'electron/renderer'
 import { SearchController } from '@preload/controller/search/search.controller'
+import { CustomerCreateController } from '@preload/controller/customer/customer-create/customer-create.controller'
 
 /**
  * Context bridge API
  */
+contextBridge.exposeInMainWorld(
+  'customerCreateController',
+  extractStaticMethods(CustomerCreateController)
+)
 contextBridge.exposeInMainWorld('searchController', extractStaticMethods(SearchController))
 
 type ExtractedStaticMethods<T> = {

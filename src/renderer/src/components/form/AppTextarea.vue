@@ -8,13 +8,17 @@
       v-bind="$attrs"
       :id="textareaId"
       :name="name"
-      :value="value"
+      :value="modelValue"
       :required="isRequired"
       :rows="rows"
+      :maxlength="maxLength"
       :class="['form-control', textareaClass]"
       :placeholder="placeholder || $t('common.placeholder', { field: label.toLocaleLowerCase() })"
       @input="handleInput"
-    ></textarea>
+    />
+    <div v-if="error" class="text-danger mt-1">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -27,9 +31,11 @@ const props = withDefaults(
     isRequired?: boolean
     name?: string
     textareaClass?: string
-    value?: string
+    modelValue?: string
     rows?: number
     placeholder?: string
+    maxLength?: number
+    error?: string | null
   }>(),
   {
     isRequired: false,
@@ -38,7 +44,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:value': [value: string]
+  'update:modelValue': [value: string]
 }>()
 
 // Generate unique ID for the textarea
@@ -48,7 +54,7 @@ const textareaId = computed(() => {
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLTextAreaElement
-  emit('update:value', target.value)
+  emit('update:modelValue', target.value)
 }
 
 // Inherit all other attributes

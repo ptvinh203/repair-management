@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative">
+  <div class="table-responsive position-relative mb-0">
     <Loading :key-loading="keyLoading" />
     <table class="table table-bordered table-hover">
       <thead :style="{ backgroundColor: '#2c3e50' }" class="text-white">

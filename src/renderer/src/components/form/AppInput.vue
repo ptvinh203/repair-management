@@ -9,12 +9,17 @@
       :id="inputId"
       :type="type"
       :name="name"
-      :value="value"
+      :value="modelValue"
       :required="isRequired"
+      :disabled="disabled"
+      :maxlength="maxLength"
       :class="['form-control', inputClass]"
       :placeholder="placeholder || $t('common.placeholder', { field: label.toLocaleLowerCase() })"
       @input="handleInput"
     />
+    <div v-if="error" class="text-danger mt-1">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -27,10 +32,13 @@ const props = withDefaults(
     isRequired?: boolean
     type?: string
     name?: string
-    value?: string | number
+    modelValue?: string | number
     inputClass?: string
     hasMargin?: boolean
     placeholder?: string
+    disabled?: boolean
+    maxLength?: number
+    error?: string | null
   }>(),
   {
     isRequired: false,
@@ -40,7 +48,7 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:value': [value: string | number]
+  'update:modelValue': [value: string | number]
 }>()
 
 // Generate unique ID for the input
@@ -51,7 +59,7 @@ const inputId = computed(() => {
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement
   const newValue = props.type === 'number' ? Number(target.value) : target.value
-  emit('update:value', newValue)
+  emit('update:modelValue', newValue)
 }
 
 // Inherit all other attributes

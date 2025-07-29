@@ -7,164 +7,166 @@
     "add-customer": "Thêm Khách Hàng",
     "add-repair": "Thêm Đơn Sửa Chữa"
   },
-  "customer": {
-    "create": {
-      "title": "Tạo Thông Tin Khách Hàng",
-      "recent-customers": "Khách Hàng Gần Đây",
-      "existing-alert": {
-        "title": "Khách hàng đã tồn tại!",
-        "message": "Khách hàng với số điện thoại này đã có trong hệ thống. Bạn có thể cập nhật thông tin bên dưới."
-      },
-      "form": {
-        "name": "Họ và Tên",
-        "phone": "Số Điện Thoại",
-        "address": "Địa Chỉ",
-        "required": "*"
-      },
-      "actions": {
-        "create": "Tạo Khách Hàng",
-        "clear": "Xóa",
-        "cancel": "Hủy"
+  "modules": {
+    "customer": {
+      "create": {
+        "title": "Tạo Thông Tin Khách Hàng",
+        "existing-alert": {
+          "title": "Khách hàng đã tồn tại!",
+          "message": "Khách hàng với số điện thoại này đã có trong hệ thống. Bạn có thể cập nhật thông tin bên dưới."
+        },
+        "form": {
+          "name": "Họ và Tên",
+          "phone": "Số Điện Thoại",
+          "address": "Địa Chỉ",
+          "required": "*"
+        },
+        "actions": {
+          "create": "Tạo Khách Hàng",
+          "clear": "Đặt Lại",
+          "cancel": "Hủy"
+        },
+        "success": {
+          "title": "Thành Công!",
+          "message": "Khách hàng đã được tạo thành công.",
+          "ok": "Đồng Ý",
+          "create-repair": "Tạo Đơn Sửa Chữa"
+        }
       },
       "table": {
+        "title": "Khách Hàng Gần Đây",
         "name": "Họ Tên",
         "phone": "Điện Thoại",
         "address": "Địa Chỉ",
         "actions": "Thao Tác"
-      },
-      "success": {
-        "title": "Thành Công!",
-        "message": "Khách hàng đã được tạo thành công.",
-        "ok": "Đồng Ý",
-        "create-repair": "Tạo Đơn Sửa Chữa"
       }
-    }
-  },
-  "search": {
+    },
     "search": {
-      "title": "Tìm kiếm đơn hàng",
-      "customer-label": "Tên/SĐT khách hàng",
-      "customer-placeholder": "Nhập tên hoặc số điện thoại...",
-      "date-range": "Thời gian sửa chữa",
-      "search": "Tìm kiếm",
-      "export": "Xuất công nợ"
-    },
-    "results": {
-      "title": "Kết quả tìm kiếm",
-      "no-results": "Không tìm thấy đơn hàng nào phù hợp với tiêu chí tìm kiếm.",
-      "table": {
-        "no": "No",
-        "repair-date": "Ngày sửa",
-        "description": "Nội dung sửa chữa",
-        "technician": "Người sửa",
-        "amount": "Số tiền phải trả",
-        "payment-status": "Trạng thái thanh toán",
-        "warranty": "Bảo hành",
-        "actions": "Thao tác"
-      }
-    }
-  },
-  "repair": {
-    "create": {
-      "basic-info": "Thông tin cơ bản",
-      "form": {
-        "repair-date": "Ngày sửa",
-        "completion-date": "Ngày hoàn thành",
-        "customer": "Khách hàng",
-        "description": "Nội dung sửa chữa",
-        "amount": "Số tiền (VND)",
-        "warranty-duration": "Thời gian bảo hành",
-        "select-warranty": "Chọn thời gian bảo hành",
-        "required": "*"
-      },
-      "warranty": {
-        "title": "Thông tin bảo hành",
-        "date": "Ngày bảo hành",
-        "content": "Nội dung bảo hành",
-        "actions": "Thao tác",
-        "add": "Thêm"
-      },
-      "payment": {
-        "title": "Thông tin thanh toán",
-        "method": "Hình thức",
-        "amount": "Số tiền",
-        "date": "Ngày thanh toán",
-        "actions": "Thao tác",
-        "add": "Thêm"
-      },
-      "actions": {
-        "submit": "Thêm mới"
-      },
-      "success": {
-        "title": "Thông báo",
-        "ok": "OK",
-        "create-another": "Tạo đơn khác"
-      },
-      "warranty-options": {
-        "3-months": "3 tháng",
-        "6-months": "6 tháng"
-      }
-    },
-    "update": {
       "search": {
-        "title": "Tìm Đơn Sửa Chữa",
-        "search-by": "Tìm theo:",
-        "by-customer": "Tên Khách Hàng",
-        "by-repair-id": "Mã Đơn",
-        "keyword": "Từ khóa:",
-        "placeholder": "Nhập từ khóa tìm kiếm...",
-        "search": "Tìm"
+        "title": "Tìm kiếm đơn hàng",
+        "customer-label": "Tên/SĐT khách hàng",
+        "customer-placeholder": "Nhập tên hoặc số điện thoại...",
+        "date-range": "Thời gian sửa chữa",
+        "search": "Tìm kiếm",
+        "export": "Xuất công nợ"
       },
       "results": {
-        "title": "Kết Quả Tìm Kiếm",
+        "title": "Kết quả tìm kiếm",
+        "no-results": "Không tìm thấy đơn hàng nào phù hợp với tiêu chí tìm kiếm.",
         "table": {
-          "repair-id": "Mã Đơn",
-          "customer": "Khách Hàng",
-          "repair-date": "Ngày Sửa",
-          "description": "Nội Dung",
-          "status": "Trạng Thái",
-          "actions": "Thao Tác"
+          "no": "No",
+          "repair-date": "Ngày sửa",
+          "description": "Nội dung sửa chữa",
+          "technician": "Người sửa",
+          "amount": "Số tiền phải trả",
+          "payment-status": "Trạng thái thanh toán",
+          "warranty": "Bảo hành",
+          "actions": "Thao tác"
+        }
+      }
+    },
+    "repair": {
+      "create": {
+        "basic-info": "Thông tin cơ bản",
+        "form": {
+          "repair-date": "Ngày sửa",
+          "completion-date": "Ngày hoàn thành",
+          "customer": "Khách hàng",
+          "description": "Nội dung sửa chữa",
+          "amount": "Số tiền (VND)",
+          "warranty-duration": "Thời gian bảo hành",
+          "select-warranty": "Chọn thời gian bảo hành",
+          "required": "*"
+        },
+        "warranty": {
+          "title": "Thông tin bảo hành",
+          "date": "Ngày bảo hành",
+          "content": "Nội dung bảo hành",
+          "actions": "Thao tác",
+          "add": "Thêm"
+        },
+        "payment": {
+          "title": "Thông tin thanh toán",
+          "method": "Hình thức",
+          "amount": "Số tiền",
+          "date": "Ngày thanh toán",
+          "actions": "Thao tác",
+          "add": "Thêm"
+        },
+        "actions": {
+          "submit": "Thêm mới"
+        },
+        "success": {
+          "title": "Thông báo",
+          "ok": "OK",
+          "create-another": "Tạo đơn khác"
+        },
+        "warranty-options": {
+          "3-months": "3 tháng",
+          "6-months": "6 tháng"
         }
       },
-      "form": {
-        "basic-info": "Thông tin cơ bản",
-        "repair-date": "Ngày sửa",
-        "completion-date": "Ngày hoàn thành",
-        "customer": "Khách hàng",
-        "description": "Nội dung sửa chữa",
-        "amount": "Số tiền (VND)",
-        "warranty-duration": "Thời gian bảo hành",
-        "select-warranty": "Chọn thời gian bảo hành",
-        "required": "*"
-      },
-      "warranty": {
-        "title": "Thông tin bảo hành",
-        "date": "Ngày bảo hành",
-        "content": "Nội dung bảo hành",
-        "actions": "Thao tác",
-        "add": "Thêm"
-      },
-      "payment": {
-        "title": "Thông tin thanh toán",
-        "method": "Hình thức",
-        "amount": "Số tiền",
-        "date": "Ngày thanh toán",
-        "actions": "Thao tác",
-        "add": "Thêm"
-      },
-      "actions": {
-        "update": "Cập nhật",
-        "cancel": "Hủy"
-      },
-      "success": {
-        "title": "Thông báo",
-        "ok": "OK"
-      },
-      "warranty-options": {
-        "1-month": "1 tháng",
-        "3-months": "3 tháng",
-        "6-months": "6 tháng",
-        "12-months": "12 tháng"
+      "update": {
+        "search": {
+          "title": "Tìm Đơn Sửa Chữa",
+          "search-by": "Tìm theo:",
+          "by-customer": "Tên Khách Hàng",
+          "by-repair-id": "Mã Đơn",
+          "keyword": "Từ khóa:",
+          "placeholder": "Nhập từ khóa tìm kiếm...",
+          "search": "Tìm"
+        },
+        "results": {
+          "title": "Kết Quả Tìm Kiếm",
+          "table": {
+            "repair-id": "Mã Đơn",
+            "customer": "Khách Hàng",
+            "repair-date": "Ngày Sửa",
+            "description": "Nội Dung",
+            "status": "Trạng Thái",
+            "actions": "Thao Tác"
+          }
+        },
+        "form": {
+          "basic-info": "Thông tin cơ bản",
+          "repair-date": "Ngày sửa",
+          "completion-date": "Ngày hoàn thành",
+          "customer": "Khách hàng",
+          "description": "Nội dung sửa chữa",
+          "amount": "Số tiền (VND)",
+          "warranty-duration": "Thời gian bảo hành",
+          "select-warranty": "Chọn thời gian bảo hành",
+          "required": "*"
+        },
+        "warranty": {
+          "title": "Thông tin bảo hành",
+          "date": "Ngày bảo hành",
+          "content": "Nội dung bảo hành",
+          "actions": "Thao tác",
+          "add": "Thêm"
+        },
+        "payment": {
+          "title": "Thông tin thanh toán",
+          "method": "Hình thức",
+          "amount": "Số tiền",
+          "date": "Ngày thanh toán",
+          "actions": "Thao tác",
+          "add": "Thêm"
+        },
+        "actions": {
+          "update": "Cập nhật",
+          "cancel": "Hủy"
+        },
+        "success": {
+          "title": "Thông báo",
+          "ok": "OK"
+        },
+        "warranty-options": {
+          "1-month": "1 tháng",
+          "3-months": "3 tháng",
+          "6-months": "6 tháng",
+          "12-months": "12 tháng"
+        }
       }
     }
   },
@@ -175,6 +177,15 @@
     "search": "Tìm kiếm"
   },
   "validation": {
-    "required": "{field} không được để trống"
+    "required": "{field} không được để trống.",
+    "email": "Vui lòng nhập đúng định dạng email.",
+    "numeric": "{field} chỉ cho phép nhập số.",
+    "minLength": "{field} phải có ít nhất {length} ký tự.",
+    "maxLength": "{field} không được vượt quá {length} ký tự.",
+    "invalidFormat": "Định dạng {field} không hợp lệ."
+  },
+  "errors": {
+    "ERR00000000": "Đã xảy ra lỗi không xác định, vui lòng thử lại sau.",
+    "ERR00000001": "Số điện thoại đã tồn tại, vui lòng nhập số khác."
   }
 }

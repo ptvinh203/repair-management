@@ -16,9 +16,9 @@
         </li>
         <li class="nav-item">
           <router-link
-            to="/customer/create"
+            to="/customer"
             class="nav-link text-white"
-            :class="{ active: $route.path === '/customer/create' }"
+            :class="{ active: $route.path === '/customer' }"
           >
             {{ $t('navigation.add-customer') }}
           </router-link>
