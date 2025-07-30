@@ -1,6 +1,6 @@
 <template>
   <CardWrapper :title="$t(`${PATH_LANG}.title`)" card-class="position-relative" body-class="h-100">
-    <Loading key-loading="CUSTOMER_CREATE_FORM" />
+    <Loading key-loading="CUSTOMER_UPDATE_FORM" />
     <AppInput
       v-model="formData.name"
       type="text"
@@ -33,13 +33,13 @@
     <div class="d-flex gap-2 justify-content-end">
       <AppButton
         button-class="btn-secondary"
-        :title="$t(`${PATH_LANG}.actions.clear`)"
-        @click="onClear"
+        :title="$t(`${PATH_LANG}.actions.cancel`)"
+        @click="onCancel"
       />
       <AppButton
         button-class="btn-primary"
-        :title="$t(`${PATH_LANG}.actions.create`)"
-        @click="onCreate"
+        :title="$t(`${PATH_LANG}.actions.update`)"
+        @click="onUpdate"
       />
     </div>
   </CardWrapper>
@@ -54,28 +54,45 @@ import AppTextarea from '@renderer/components/form/AppTextarea.vue'
 import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'
 import Loading from '@renderer/components/loading/Loading.vue'
 import { showSuccessToast } from '@renderer/components/toast'
-import { useCustomerCreateStore } from './customer-create.store'
-import { useCustomerCreateValidation } from './customer-create.validate'
-import type { ICustomerForm } from './customer-create.type'
+import { showConfirmModal, showInfoModal } from '@renderer/components/modal'
+import { useCustomerUpdateStore } from './customer-update.store'
+import { useCustomerUpdateValidation } from './customer-update.validate'
+import type { ICustomerForm } from './customer-update.type'
 
-const emit = defineEmits<{ (e: 'created'): void }>()
+const props = defineProps<{ customer: ICustomerForm }>()
+
+const emit = defineEmits<{
+  (e: 'updated'): void
+  (e: 'cancel'): void
+}>()
 
 const { t } = useI18n()
-const PATH_LANG = 'modules.customer.create'
+const PATH_LANG = 'modules.customer.update'
 
-const formData = ref({} as ICustomerForm)
-const { errors, validateAll, resetErrors } = useCustomerCreateValidation(formData)
-const { isSuccess, createCustomer } = useCustomerCreateStore()
+const formData = ref<ICustomerForm>({ ...props.customer })
 
-const onCreate = async () => {
+const { errors, validateAll, resetErrors } = useCustomerUpdateValidation(formData)
+const { isSuccess, updateCustomer } = useCustomerUpdateStore()
+
+const onUpdate = async () => {
   const isValid = await validateAll()
   if (isValid) {
-    createCustomer(formData.value)
+    const isChange = JSON.stringify(formData.value) !== JSON.stringify(props.customer)
+    if (!isChange) {
+      showInfoModal(t(`${PATH_LANG}.success.no-change`))
+
+      return
+    }
+
+    const isConfirmed = await showConfirmModal()
+    if (isConfirmed) {
+      updateCustomer(formData.value.id, formData.value)
+    }
   }
 }
 
-const onClear = () => {
-  formData.value = {}
+const onCancel = () => {
+  emit('cancel')
 }
 
 watch(
@@ -83,10 +100,17 @@ watch(
   (newValue, oldValue) => {
     if (newValue && newValue !== oldValue) {
       resetErrors()
-      onClear()
       showSuccessToast(t(`${PATH_LANG}.success.message`))
-      emit('created')
+      emit('updated')
     }
+  }
+)
+
+watch(
+  () => props.customer,
+  (newCustomer) => {
+    formData.value = { ...newCustomer }
+    resetErrors()
   }
 )
 </script>

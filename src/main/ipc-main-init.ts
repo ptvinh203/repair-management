@@ -1,5 +1,5 @@
-import { customerCreateHandler } from '@preload/controller/customer/customer-create/customer-create.handler'
+import { customerHandler } from '@preload/controller/customer/customer.handler'
 
 export const initIpcMainHandlers = () => {
-  customerCreateHandler()
+  customerHandler()
 }

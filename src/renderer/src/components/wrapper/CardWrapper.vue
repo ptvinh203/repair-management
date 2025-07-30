@@ -4,7 +4,13 @@
       <h3 class="h5 mb-0">{{ title }}</h3>
     </div>
 
-    <div :class="['card-body', bodyClass]">
+    <div
+      :class="['card-body', bodyClass]"
+      :style="{
+        maxHeight: maxHeight ? `${maxHeight}px` : 'none',
+        overflowY: maxHeight ? 'auto' : 'visible'
+      }"
+    >
       <slot></slot>
     </div>
   </div>
@@ -16,6 +22,7 @@ interface CardWrapperProps {
   cardClass?: string
   bodyClass?: string
   headerClass?: string
+  maxHeight?: number
 }
 
 withDefaults(defineProps<CardWrapperProps>(), {

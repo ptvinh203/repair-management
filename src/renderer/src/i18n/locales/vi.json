@@ -7,19 +7,35 @@
     "add-customer": "Thêm Khách Hàng",
     "add-repair": "Thêm Đơn Sửa Chữa"
   },
+  "modal": {
+    "confirm": {
+      "default-title": "Xác nhận",
+      "default-confirm": "Đồng ý",
+      "default-cancel": "Hủy",
+      "update-title": "Xác nhận cập nhật",
+      "update-with-name": "Bạn có chắc chắn muốn cập nhật không?",
+      "update-generic": "Bạn có chắc chắn muốn cập nhật dữ liệu này không?",
+      "delete-title": "Xác nhận xóa",
+      "delete-with-name": "Bạn có chắc chắn muốn xóa không?",
+      "delete-generic": "Bạn có chắc chắn muốn xóa dữ liệu này không?",
+      "delete-confirm": "Xóa",
+      "delete-cancel": "Hủy"
+    },
+    "info": {
+      "default-title": "Thông báo",
+      "default-ok": "Đồng ý",
+      "success-title": "Thành công",
+      "error-title": "Lỗi"
+    }
+  },
   "modules": {
     "customer": {
       "create": {
         "title": "Tạo Thông Tin Khách Hàng",
-        "existing-alert": {
-          "title": "Khách hàng đã tồn tại!",
-          "message": "Khách hàng với số điện thoại này đã có trong hệ thống. Bạn có thể cập nhật thông tin bên dưới."
-        },
         "form": {
           "name": "Họ và Tên",
           "phone": "Số Điện Thoại",
-          "address": "Địa Chỉ",
-          "required": "*"
+          "address": "Địa Chỉ"
         },
         "actions": {
           "create": "Tạo Khách Hàng",
@@ -33,13 +49,34 @@
           "create-repair": "Tạo Đơn Sửa Chữa"
         }
       },
+      "update": {
+        "title": "Cập Nhật Thông Tin Khách Hàng",
+        "form": {
+          "name": "Họ và Tên",
+          "phone": "Số Điện Thoại",
+          "address": "Địa Chỉ"
+        },
+        "actions": {
+          "update": "Cập Nhật Khách Hàng",
+          "clear": "Đặt Lại",
+          "cancel": "Hủy"
+        },
+        "success": {
+          "title": "Thành Công!",
+          "message": "Khách hàng đã được cập nhật thành công.",
+          "ok": "Đồng Ý",
+          "create-repair": "Tạo Đơn Sửa Chữa",
+          "no-change": "Không có thay đổi nào được thực hiện."
+        }
+      },
       "table": {
         "title": "Khách Hàng Gần Đây",
         "name": "Họ Tên",
         "phone": "Điện Thoại",
         "address": "Địa Chỉ",
         "actions": "Thao Tác"
-      }
+      },
+      "delete-success": "Khách hàng đã được xóa thành công."
     },
     "search": {
       "search": {
@@ -174,7 +211,12 @@
     "select-option": "Chọn một tùy chọn",
     "no-search-result": "Không tìm thấy dữ liệu phù hợp",
     "placeholder": "Nhập {field} ...",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "notificate-from-system": "Thông báo từ hệ thống",
+    "btn-edit": "Chỉnh sửa",
+    "btn-delete": "Xóa",
+    "btn-create": "Tạo mới",
+    "btn-cancel": "Hủy"
   },
   "validation": {
     "required": "{field} không được để trống.",
@@ -186,6 +228,7 @@
   },
   "errors": {
     "ERR00000000": "Đã xảy ra lỗi không xác định, vui lòng thử lại sau.",
-    "ERR00000001": "Số điện thoại đã tồn tại, vui lòng nhập số khác."
+    "ERR00000001": "Số điện thoại đã tồn tại, vui lòng nhập số khác.",
+    "ERR00000002": "Không tìm thấy khách hàng tương ứng."
   }
 }

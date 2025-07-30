@@ -1,35 +1,35 @@
 <template>
   <div class="table-responsive position-relative mb-0">
     <Loading :key-loading="keyLoading" />
-    <table class="table table-bordered table-hover">
-      <thead :style="{ backgroundColor: '#2c3e50' }" class="text-white">
+    <table
+      :class="[
+        'table table-bordered table-hover',
+        {
+          'table-fixed': isTableFixed,
+          'sticky-left-column': headers.length > 0 && headers[0].isSticky,
+          'sticky-right-column': headers.length > 0 && headers[headers.length - 1].isSticky
+        }
+      ]"
+    >
+      <thead class="table-header">
         <tr>
           <th
             v-for="header in headers"
             :key="header.key"
+            :style="{ width: header.width ? `${header.width}px` : 'auto' }"
+            :class="['text-center align-middle', { 'sortable-header': header.isSortable }]"
             scope="col"
-            :style="{
-              width: header.width ? `${header.width}px` : 'auto',
-              position: header.sticky ? 'sticky' : 'static',
-              right: header.sticky ? '0' : 'auto',
-              zIndex: header.sticky ? 10 : 'auto'
-            }"
-            :class="[
-              'text-center align-middle',
-              header.sticky ? 'sticky-column' : '',
-              header.sortable ? 'sortable-header' : ''
-            ]"
-            @click="handleSort(header.key, header.sortable)"
+            @click="handleSort(header.key, header.isSortable)"
           >
             <div class="d-flex align-items-center justify-content-center">
               <span>{{ header.label }}</span>
-              <i v-if="header.sortable" :class="getSortIconClass(header.key)" class="ms-2"></i>
+              <i v-if="header.isSortable" :class="getSortIconClass(header.key)" class="ms-2"></i>
             </div>
           </th>
         </tr>
       </thead>
-      <tbody v-if="!onlyHeader">
-        <tr v-if="!data || data.length === 0">
+      <tbody v-if="!isOnlyHeader">
+        <tr v-if="(data ?? []).length === 0">
           <td :colspan="headers.length" class="text-left text-muted">
             {{ $t('common.no-search-result') }}
           </td>
@@ -38,17 +38,18 @@
           <td
             v-for="header in headers"
             :key="header.key"
-            :style="{
-              position: header.sticky ? 'sticky' : 'static',
-              left: header.sticky ? '0' : 'auto',
-              zIndex: header.sticky ? 5 : 'auto'
-            }"
             :class="[
-              getTextAlignClass(header.align),
-              header.sticky ? 'sticky-column bg-white' : ''
+              'align-middle',
+              `text-${header.align || 'center'}`,
+              rowIndex === hightlightedRow ? 'highlighted-row' : 'bg-white'
             ]"
           >
-            <slot :name="`cell-${header.key}`" :row="row" :value="row[header.key]">
+            <slot
+              :name="`cell:${header.key}`"
+              :row="row"
+              :value="row[header.key]"
+              :index="rowIndex"
+            >
               {{ row[header.key] }}
             </slot>
           </td>
@@ -63,15 +64,21 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import Loading from '@renderer/components/loading/Loading.vue'
-import type { ITableHeader, ITableData, TTableAlign, TTableSortDirection } from './table.tyle'
-import './table.style.scss'
+import type { ITableHeader, ITableData, TTableSortDirection } from './table.tyle'
 
-const props = defineProps<{
-  headers: ITableHeader[]
-  data: ITableData[] | null
-  keyLoading?: string
-  onlyHeader?: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    headers: ITableHeader[]
+    data: ITableData[] | null
+    keyLoading?: string
+    hightlightedRow?: number
+    isTableFixed?: boolean
+    isOnlyHeader?: boolean
+  }>(),
+  {
+    isTableFixed: true
+  }
+)
 
 const emit = defineEmits<{
   sort: [column: string | null, direction: TTableSortDirection, initial: boolean]
@@ -99,7 +106,7 @@ const loadSortState = (): void => {
     const { key, order } = JSON.parse(savedState)
 
     // Validate that the saved column key exists in current headers
-    const headerExists = props.headers.some((header) => header.key === key && header.sortable)
+    const headerExists = props.headers.some((header) => header.key === key && header.isSortable)
 
     if (headerExists && (order === 'asc' || order === 'desc')) {
       sortColumn.value = key
@@ -123,16 +130,6 @@ const saveSortState = (): void => {
   }
 
   localStorage.removeItem(storageKey)
-}
-
-const getTextAlignClass = (align?: TTableAlign): string => {
-  const alignMap = {
-    left: 'text-start',
-    right: 'text-end',
-    center: 'text-center'
-  }
-
-  return (align && alignMap[align]) || 'text-start'
 }
 
 const getSortIconClass = (columnKey: string): string => {
@@ -174,3 +171,7 @@ onMounted(() => {
   loadSortState()
 })
 </script>
+
+<style lang="scss" scoped>
+@import url('./table.style.scss');
+</style>

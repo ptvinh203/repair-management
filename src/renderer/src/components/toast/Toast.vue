@@ -8,7 +8,7 @@
       :class="toastClass"
     >
       <div class="toast-header" :class="toastClass">
-        <strong class="me-auto">Thông báo từ hệ thống</strong>
+        <strong class="me-auto">{{ $t(`common.notificate-from-system`) }}</strong>
         <button
           type="button"
           class="btn-close"
