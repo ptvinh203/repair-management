@@ -1,5 +1,8 @@
 export const CONSTANTS = {
   ERR_CODE: {
     SERVER_ERROR: 'ERR00000000'
+  },
+  MASTER_KEY: {
+    PAYMENT_METHOD: '0000000003'
   }
 }

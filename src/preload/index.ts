@@ -1,12 +1,14 @@
 import { contextBridge } from 'electron/renderer'
 import { SearchController } from '@preload/controller/search/search.controller'
 import { CustomerController } from '@preload/controller/customer/customer.controller'
+import { MasterController } from '@preload/controller/master/master.controller'
 
 /**
  * Context bridge API
  */
 contextBridge.exposeInMainWorld('customerController', extractStaticMethods(CustomerController))
 contextBridge.exposeInMainWorld('searchController', extractStaticMethods(SearchController))
+contextBridge.exposeInMainWorld('masterController', extractStaticMethods(MasterController))
 
 type ExtractedStaticMethods<T> = {
   [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K]

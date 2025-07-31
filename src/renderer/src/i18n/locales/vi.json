@@ -108,7 +108,7 @@
         "form": {
           "repair-date": "Ngày sửa",
           "completion-date": "Ngày hoàn thành",
-          "customer": "Khách hàng",
+          "customer-phone": "Số điện thoại khách hàng",
           "description": "Nội dung sửa chữa",
           "amount": "Số tiền (VND)",
           "warranty-duration": "Thời gian bảo hành",
@@ -120,7 +120,8 @@
           "date": "Ngày bảo hành",
           "content": "Nội dung bảo hành",
           "actions": "Thao tác",
-          "add": "Thêm"
+          "add": "Thêm",
+          "remove": "Xóa"
         },
         "payment": {
           "title": "Thông tin thanh toán",
@@ -128,10 +129,10 @@
           "amount": "Số tiền",
           "date": "Ngày thanh toán",
           "actions": "Thao tác",
-          "add": "Thêm"
+          "remove": "Xóa"
         },
         "actions": {
-          "submit": "Thêm mới"
+          "submit": "Thêm Đơn Sửa Chữa"
         },
         "success": {
           "title": "Thông báo",
@@ -216,7 +217,8 @@
     "btn-edit": "Chỉnh sửa",
     "btn-delete": "Xóa",
     "btn-create": "Tạo mới",
-    "btn-cancel": "Hủy"
+    "btn-cancel": "Hủy",
+    "btn-add": "Thêm"
   },
   "validation": {
     "required": "{field} không được để trống.",

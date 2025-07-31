@@ -1,6 +1,6 @@
 <template>
   <div :class="[hasMargin ? 'mb-3' : '']">
-    <label :for="inputId" class="form-label">
+    <label v-if="isShowLabel" :for="inputId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
     </label>
@@ -39,11 +39,13 @@ const props = withDefaults(
     disabled?: boolean
     maxLength?: number
     error?: string | null
+    isShowLabel?: boolean
   }>(),
   {
     isRequired: false,
     type: 'text',
-    hasMargin: true
+    hasMargin: true,
+    isShowLabel: true
   }
 )
 

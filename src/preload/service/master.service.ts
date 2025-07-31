@@ -1,6 +1,8 @@
-import AbstractService from '@preload/service/abstract.service'
 import * as fs from 'fs'
 import { join } from 'path'
+import AbstractService from '@preload/service/abstract.service'
+import { getSuccessResponse, type AppResponse } from '@preload/common/model/response'
+import type { IOptionList } from '@preload/controller/master/master.type'
 
 class MasterService extends AbstractService {
   /**
@@ -13,14 +15,13 @@ class MasterService extends AbstractService {
    */
   public async initializeData(): Promise<void> {
     try {
-      const existingRecordsCount = await this.prisma.common.count()
-
-      if (existingRecordsCount > 0) {
-        return
-      }
+      const distinctKeys = await this.prisma.common.findMany({
+        where: { deleted_at: null },
+        distinct: ['key'],
+        select: { key: true }
+      })
 
       const csvPath = join(__dirname, '../../prisma/data/common.csv')
-
       if (!fs.existsSync(csvPath)) {
         throw new Error(`CSV file not found at path: ${csvPath}`)
       }
@@ -30,9 +31,11 @@ class MasterService extends AbstractService {
 
       // Skip the header row
       const dataLines = lines.slice(1)
+      const keys = new Set<string>()
 
       const commonData = dataLines.map((line) => {
         const columns = line.split(',')
+        keys.add(columns[0])
 
         return {
           key: columns[0],
@@ -48,10 +51,46 @@ class MasterService extends AbstractService {
         }
       })
 
+      // Check if the Common table already contains all distinct keys
+      const isSameAllElements = distinctKeys.every((item) => keys.has(item.key))
+      if (keys.size === distinctKeys.length && isSameAllElements) {
+        return
+      }
+
+      // If there are existing records, delete them before inserting new data
+      if (distinctKeys.length > 0) {
+        await this.prisma.common.deleteMany()
+      }
+
       // Insert all data in a single transaction
       await this.prisma.common.createMany({ data: commonData })
     } catch (error) {
       console.error('Error initializing Common table data:', error)
+    }
+  }
+
+  /**
+   * Retrieves common data by key.
+   * This function fetches records from the Common table based on the provided key.
+   * It returns an array of objects containing the key and value for each record.
+   *
+   * @param {string} key - The key to filter the Common table records
+   * @returns {Promise<AppResponse<IOptionList>>} A promise that resolves to an AppResponse containing the common data
+   */
+  public async getOptionsByKey(key: string): Promise<AppResponse<IOptionList>> {
+    try {
+      const commons = await this.prisma.common.findMany({
+        where: { key, deleted_at: null },
+        orderBy: { display_order: 'asc' },
+        select: {
+          cd: true,
+          value: true
+        }
+      })
+
+      return getSuccessResponse(commons.map((item) => ({ key: item.value, value: item.cd })))
+    } catch {
+      return getSuccessResponse([])
     }
   }
 }

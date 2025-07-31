@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-3">
-    <label :for="selectId" class="form-label">
+  <div :class="[{ 'mb-3': hasMargin }]">
+    <label v-if="isShowLabel" :for="selectId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
     </label>
@@ -22,11 +22,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-
-interface SelectOption {
-  key: string
-  value: string | number
-}
+import type { ISelectOption } from '@renderer/common/utils/option.util'
 
 interface AppSelectProps {
   label: string
@@ -34,9 +30,11 @@ interface AppSelectProps {
   name?: string
   selectClass?: string
   value?: string | number
-  options: SelectOption[]
+  options: ISelectOption[]
   hasBlankOption?: boolean
+  hasMargin?: boolean
   isDefault?: boolean
+  isShowLabel?: boolean
 }
 
 const props = withDefaults(defineProps<AppSelectProps>(), {
@@ -44,8 +42,10 @@ const props = withDefaults(defineProps<AppSelectProps>(), {
   name: '',
   selectClass: '',
   value: '',
-  hasBlankOption: false,
-  isDefault: false
+  hasBlankOption: true,
+  hasMargin: true,
+  isDefault: false,
+  isShowLabel: true
 })
 
 const emit = defineEmits<{
