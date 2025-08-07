@@ -1,5 +1,5 @@
 <template>
-  <div :class="['card', 'shadow-sm', wrapperClass]">
+  <div :class="['card shadow-sm search-wrapper', wrapperClass]">
     <!-- Card Header with Title -->
     <div class="card-header bg-white">
       <h3 class="h5 mb-0">{{ title }}</h3>

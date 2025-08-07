@@ -1,5 +1,5 @@
 <template>
-  <div :class="[{ 'mb-3': hasMargin }]">
+  <div :class="[{ 'mb-3': hasMargin }, wrapperClass]">
     <label v-if="isShowLabel" :for="selectId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
@@ -29,6 +29,7 @@ interface AppSelectProps {
   isRequired?: boolean
   name?: string
   selectClass?: string
+  wrapperClass?: string
   value?: string | number
   options: ISelectOption[]
   hasBlankOption?: boolean

@@ -1,8 +1,12 @@
 <template>
   <div class="container-fluid py-3">
-    <SearchWrapper :title="$t(`${PATH_LANG}.search.title`)" class="mb-3" @on-search="onSearch">
+    <SearchWrapper
+      wrapper-class="mb-3"
+      :title="$t(`${PATH_LANG}.search.title`)"
+      @on-search="onSearch"
+    >
       <div class="row g-3">
-        <div class="col-md-6">
+        <div class="col-lg-6 col-md-6">
           <AppInput
             v-model="searchData.customerSearch"
             type="text"
@@ -12,18 +16,30 @@
             :has-margin="false"
           />
         </div>
-
-        <div class="col-md-6">
+        <div class="col-lg-6 col-md-6">
           <label class="form-label">{{ $t(`${PATH_LANG}.search.date-range`) }}</label>
-          <div class="d-flex align-items-center gap-2">
-            <input
+          <div class="row align-items-center">
+            <AppInput
               v-model="searchData.startDate"
               type="date"
-              class="form-control"
               name="startDate"
+              wrapper-class="col-md-5"
+              :label="''"
+              :is-show-label="false"
+              :has-margin="false"
             />
-            <span class="text-muted">~</span>
-            <input v-model="searchData.endDate" type="date" class="form-control" name="endDate" />
+            <div class="col-md-2 align-self-center text-center">
+              <span class="text-muted">~</span>
+            </div>
+            <AppInput
+              v-model="searchData.endDate"
+              type="date"
+              name="endDate"
+              wrapper-class="col-md-5"
+              :label="''"
+              :is-show-label="false"
+              :has-margin="false"
+            />
           </div>
         </div>
       </div>
@@ -33,11 +49,9 @@
       </template>
     </SearchWrapper>
 
-    <Table key-loading="REPAIR_SEARCH_RESULT" :headers="TABLE_HEADERS" :data="[]">
-      <template #cell-actions="">
-        <div class="d-flex justify-content-center gap-2"></div>
-      </template>
-    </Table>
+    <CardWrapper body-class="p-0" :max-height="tableMaxHeight">
+      <Table key-loading="REPAIR_SEARCH_RESULT" :headers="TABLE_HEADERS" :data="[]"> </Table>
+    </CardWrapper>
   </div>
 </template>
 
@@ -48,12 +62,20 @@ import AppButton from '@renderer/components/form/AppButton.vue'
 import AppInput from '@renderer/components/form/AppInput.vue'
 import SearchWrapper from '@renderer/components/wrapper/SearchWrapper.vue'
 import Table from '@renderer/components/table/Table.vue'
+import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'
+import { getIndexTableHeader } from '@renderer/common/utils/table.util'
+import { useTableMaxHeight } from '@renderer/common/hook/height/useTableMaxHeight'
 import { useSearchStore } from './search.store'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
 
 const { t } = useI18n()
-const PATH_LANG = 'search'
+const PATH_LANG = 'modules.search'
 
+const { maxHeight: tableMaxHeight } = useTableMaxHeight([
+  '.navbar',
+  '.search-wrapper',
+  '.card-header'
+])
 const { handleSearch } = useSearchStore()
 
 const searchData = ref({
@@ -63,54 +85,48 @@ const searchData = ref({
 })
 
 const TABLE_HEADERS: ITableHeader[] = [
-  {
-    label: t(`${PATH_LANG}.results.table.no`),
-    key: 'no',
-    width: 50,
-    align: 'center'
-  },
+  getIndexTableHeader(),
   {
     label: t(`${PATH_LANG}.results.table.repair-date`),
     key: 'repairDate',
-    width: 80,
-    align: 'left'
+    width: 100,
+    align: 'start'
   },
   {
     label: t(`${PATH_LANG}.results.table.description`),
     key: 'description',
     width: 200,
-    align: 'left'
+    align: 'start'
   },
   {
     label: t(`${PATH_LANG}.results.table.technician`),
     key: 'technician',
     width: 120,
-    align: 'left'
+    align: 'start'
   },
   {
     label: t(`${PATH_LANG}.results.table.amount`),
     key: 'amount',
-    width: 80,
-    align: 'right'
+    width: 100,
+    align: 'end'
   },
   {
     label: t(`${PATH_LANG}.results.table.payment-status`),
     key: 'paymentStatus',
-    width: 80,
+    width: 100,
     align: 'center'
   },
   {
     label: t(`${PATH_LANG}.results.table.warranty`),
     key: 'warranty',
-    width: 80,
+    width: 100,
     align: 'center'
   },
   {
     label: t(`${PATH_LANG}.results.table.actions`),
     key: '',
-    width: 100,
-    align: 'center',
-    sticky: true
+    width: 150,
+    isSticky: true
   }
 ]
 

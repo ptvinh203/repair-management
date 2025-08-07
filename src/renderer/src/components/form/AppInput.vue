@@ -1,5 +1,5 @@
 <template>
-  <div :class="[hasMargin ? 'mb-3' : '']">
+  <div :class="[hasMargin ? 'mb-3' : wrapperClass]">
     <label v-if="isShowLabel" :for="inputId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
@@ -34,6 +34,7 @@ const props = withDefaults(
     name?: string
     modelValue?: string | number
     inputClass?: string
+    wrapperClass?: string
     hasMargin?: boolean
     placeholder?: string
     disabled?: boolean

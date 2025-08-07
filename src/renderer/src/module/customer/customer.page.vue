@@ -12,8 +12,8 @@
       </div>
       <div class="col-lg-6">
         <CardWrapper
-          :title="$t(`${PATH_LANG}.table.title`)"
           body-class="p-0"
+          :title="$t(`${PATH_LANG}.table.title`)"
           :max-height="tableMaxHeight"
         >
           <Table
@@ -56,9 +56,9 @@ import { getIndexTableHeader } from '@renderer/common/utils/table.util'
 import { showDeleteConfirmModal } from '@renderer/components/modal'
 import { useTableMaxHeight } from '@renderer/common/hook/height/useTableMaxHeight'
 import { useCustomerStore } from './customer.store'
+import { showSuccessToast } from '@renderer/components/toast'
 import type { ITableData, ITableHeader } from '@renderer/components/table/table.tyle'
 import type { ICustomer } from './customer.type'
-import { showSuccessToast } from '@renderer/components/toast'
 
 const { t } = useI18n()
 const { maxHeight: tableMaxHeight } = useTableMaxHeight()

@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-3">
-    <label :for="textareaId" class="form-label">
+  <div :class="[{ 'mb-3': hasMargin }, wrapperClass]">
+    <label v-if="isShowLabel" :for="textareaId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
     </label>
@@ -31,15 +31,20 @@ const props = withDefaults(
     isRequired?: boolean
     name?: string
     textareaClass?: string
+    wrapperClass?: string
     modelValue?: string
     rows?: number
     placeholder?: string
     maxLength?: number
     error?: string | null
+    isShowLabel?: boolean
+    hasMargin?: boolean
   }>(),
   {
     isRequired: false,
-    rows: 3
+    rows: 3,
+    isShowLabel: true,
+    hasMargin: true
   }
 )
 
