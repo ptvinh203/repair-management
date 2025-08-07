@@ -9,7 +9,7 @@
       :id="inputId"
       :type="type"
       :name="name"
-      :value="modelValue"
+      :value="internalValue"
       :required="isRequired"
       :disabled="disabled"
       :maxlength="maxLength"
@@ -24,7 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { CONSTANTS } from '@renderer/common/constants'
+import { convertDateToStr, convertStrToDate } from '@renderer/common/utils/date.utils'
 
 const props = withDefaults(
   defineProps<{
@@ -51,24 +53,49 @@ const props = withDefaults(
 )
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string | number]
+  'update:modelValue': [value: string | number | undefined]
 }>()
 
-// Generate unique ID for the input
-const inputId = computed(() => {
-  return props.name || `input-${Math.random().toString(36).substr(2, 9)}`
-})
+const internalValue = ref<string | number | undefined>(props.modelValue ?? '')
+
+const inputId = computed(() => props.name || `input-${Math.random().toString(36).substr(2, 9)}`)
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement
+
+  if (props.type === 'date') {
+    const date = convertStrToDate(target.value, CONSTANTS.DATE_FORMAT.DATE_PICKER)
+
+    if (date) {
+      emit('update:modelValue', convertDateToStr(date))
+
+      return
+    }
+  }
+
   const newValue = props.type === 'number' ? Number(target.value) : target.value
   emit('update:modelValue', newValue)
 }
 
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      if (props.type === 'date' && typeof newValue === 'string') {
+        const newDate = convertStrToDate(newValue)
+
+        internalValue.value = newDate
+          ? convertDateToStr(newDate, CONSTANTS.DATE_FORMAT.DATE_PICKER)
+          : ''
+      } else {
+        internalValue.value = newValue
+      }
+    }
+  }
+)
+
 // Inherit all other attributes
-defineOptions({
-  inheritAttrs: false
-})
+defineOptions({ inheritAttrs: false })
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,44 +1,50 @@
 <template>
   <div class="container-fluid py-3">
     <div class="row g-3">
-      <div class="col-lg-6 h-100">
-        <CardWrapper :title="$t(`${PATH_LANG}.basic-info`)" card-body="h-100">
+      <div class="col-lg-6">
+        <CardWrapper :title="$t(`${PATH_LANG}.basic-info`)" card-class="h-100">
           <AppInput
-            v-model="formData.basicInfo.repair_date"
+            v-model="basicInfoData.repair_date"
             type="date"
-            name="repair_date"
             :label="$t(`${PATH_LANG}.form.repair-date`)"
             :is-required="true"
+            :error="basicInfoErrors.repair_date"
           />
           <AppInput
-            v-model="formData.basicInfo.customer_phone"
+            v-model="basicInfoData.customer_phone"
             type="text"
             name="customer_phone"
             :label="$t(`${PATH_LANG}.form.customer-phone`)"
             :is-required="true"
+            :max-length="20"
+            :error="basicInfoErrors.customer_phone"
           />
           <AppTextarea
-            v-model="formData.basicInfo.description"
+            v-model="basicInfoData.description"
+            name="repairDescription"
             :label="$t(`${PATH_LANG}.form.description`)"
             :is-required="true"
-            name="repairDescription"
             :rows="2"
+            :max-length="1000"
+            :error="basicInfoErrors.description"
           />
           <AppInput
-            v-model="formData.basicInfo.cost"
+            v-model="basicInfoData.cost"
             type="number"
             name="cost"
             min="0"
             step="1000"
             :label="$t(`${PATH_LANG}.form.amount`)"
             :is-required="true"
+            :error="basicInfoErrors.cost"
           />
           <AppSelect
-            v-model="formData.basicInfo.warranty_period"
+            v-model="basicInfoData.warranty_period"
             name=".warranty_period"
             :label="$t(`${PATH_LANG}.form.warranty-duration`)"
             :is-required="false"
             :options="warrantyOptions"
+            :error="warrantyErrors.warranty_period"
           />
         </CardWrapper>
       </div>
@@ -46,11 +52,11 @@
       <div class="col-lg-6">
         <div class="row g-3">
           <div class="col-12">
-            <PaymentTable v-model="formData.payments" />
+            <PaymentTable v-model="paymentData" :errors="paymentErrors" />
           </div>
 
           <div class="col-12">
-            <WarrantyTable v-model="formData.warranties" />
+            <WarrantyTable v-model="warrantyData" :errors="warrantyErrors" />
           </div>
         </div>
       </div>
@@ -60,14 +66,14 @@
       <AppButton
         button-class="btn-primary btn-lg px-4"
         :title="$t(`${PATH_LANG}.actions.submit`)"
+        @click="handleSubmit"
       />
     </CardWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { ref, onMounted } from 'vue'
 import AppButton from '@renderer/components/form/AppButton.vue'
 import AppInput from '@renderer/components/form/AppInput.vue'
 import AppSelect from '@renderer/components/form/AppSelect.vue'
@@ -75,22 +81,59 @@ import AppTextarea from '@renderer/components/form/AppTextarea.vue'
 import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'
 import PaymentTable from './components/repair-create-payment-table.vue'
 import WarrantyTable from './components/repair-create-warranty-table.vue'
-import type { IBasicRepairInfo, IRepairCreateForm } from './repair-create.type'
-
-const { t } = useI18n()
+import { getCurrentDate } from '@renderer/common/utils/date.utils'
+import { getOptionsByKey, type ISelectOption } from '@renderer/common/utils/option.util'
+import {
+  usePaymentValidation,
+  useRepairBasicInfoValidation,
+  useWarrantyValidation
+} from './repair-create.validate'
+import type { IPayment, IWarranty, IBasicRepairInfo } from './repair-create.type'
+import { CONSTANTS } from '@renderer/common/constants'
 
 const PATH_LANG = 'modules.repair.create'
 
-const formData = ref<IRepairCreateForm>({
-  basicInfo: {} as IBasicRepairInfo,
-  payments: [],
-  warranties: []
-} as IRepairCreateForm)
+const basicInfoData = ref<IBasicRepairInfo>({ repair_date: getCurrentDate() as string })
+const paymentData = ref<IPayment[]>([])
+const warrantyData = ref<IWarranty[]>([])
+const warrantyOptions = ref<ISelectOption[]>([])
 
-const warrantyOptions = computed(() => [
-  { key: t(`${PATH_LANG}.warranty-options.3-months`), value: '3' },
-  { key: t(`${PATH_LANG}.warranty-options.6-months`), value: '6' }
-])
+const { errors: basicInfoErrors, validateAll: validateBasicInfo } =
+  useRepairBasicInfoValidation(basicInfoData)
+const { errors: paymentErrors, validateAll: validatePayment } = usePaymentValidation(paymentData)
+const { errors: warrantyErrors, validateAll: validateWarranty } =
+  useWarrantyValidation(warrantyData)
+
+const validateAll = async () => {
+  paymentData.value = paymentData.value.filter((payment) => {
+    const { payment_amount, payment_date, payment_method } = payment
+
+    return !!payment_amount || !!payment_date || !!payment_method
+  })
+
+  warrantyData.value = warrantyData.value.filter((warranty) => {
+    const { warranty_date, description: warranty_description } = warranty
+
+    return !!warranty_date || !!warranty_description
+  })
+
+  const basicInfoValid = await validateBasicInfo()
+  const paymentValid = await validatePayment()
+  const warrantyValid = await validateWarranty()
+
+  return basicInfoValid && paymentValid && warrantyValid
+}
+
+const handleSubmit = async () => {
+  const isValid = await validateAll()
+  if (isValid) {
+    //
+  }
+}
+
+onMounted(async () => {
+  warrantyOptions.value = await getOptionsByKey(CONSTANTS.MASTER_KEY.WARRANTY_TYPE)
+})
 </script>
 
 <style lang="scss" scoped></style>

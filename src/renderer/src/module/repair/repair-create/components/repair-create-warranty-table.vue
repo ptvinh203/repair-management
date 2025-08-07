@@ -16,6 +16,7 @@
               :label="t(`${PATH_LANG}.warranty.date`)"
               :is-show-label="false"
               :has-margin="false"
+              :error="errors[`${index}.warranty_date`]"
             />
           </td>
           <td>
@@ -25,6 +26,7 @@
               :label="t(`${PATH_LANG}.warranty.content`)"
               :is-show-label="false"
               :has-margin="false"
+              :error="errors[`${index}.description`]"
             />
           </td>
           <td class="text-center">
@@ -66,7 +68,7 @@ const TABLE_HEADERS: ITableHeader[] = [
   {
     key: 'payment_date',
     label: t(`${PATH_LANG}.warranty.date`),
-    width: 100
+    width: 120
   },
   {
     key: 'payment_method',

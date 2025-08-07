@@ -6,5 +6,6 @@ out
 *.log*
 
 /src/generated/prisma
+.env
 .env.*
 !.env.example

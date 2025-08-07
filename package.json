@@ -29,10 +29,12 @@
     "bootstrap": "^5.0.1",
     "bootstrap-icons": "^1.13.1",
     "bootstrap-vue": "^2.23.1",
+    "date-fns": "^4.1.0",
     "electron-updater": "^6.3.9",
     "pinia": "^3.0.3",
     "sqlite3": "^5.1.7",
-    "vue-i18n": "^11.1.9"
+    "vue-i18n": "^11.1.9",
+    "vuejs3-datepicker": "^1.1.3"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "3.0.0",

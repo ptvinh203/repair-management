@@ -1,6 +1,6 @@
 export interface ISelectOption {
   key: string
-  value: string | number
+  value: number
 }
 
 /**
@@ -29,5 +29,5 @@ export const getOptionsByKey = async (key: string): Promise<ISelectOption[]> => 
 export const getOptionNameByCd = (options: ISelectOption[], key: string | number): string => {
   const option = options.find((option) => option.key === key)
 
-  return option?.value as string
+  return option?.key ?? ''
 }

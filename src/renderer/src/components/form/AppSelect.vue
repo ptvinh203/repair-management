@@ -17,6 +17,9 @@
         {{ option.key }}
       </option>
     </select>
+    <div v-if="error" class="text-danger mt-1">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -30,19 +33,20 @@ interface AppSelectProps {
   name?: string
   selectClass?: string
   wrapperClass?: string
-  value?: string | number
+  modelValue?: string | number
   options: ISelectOption[]
   hasBlankOption?: boolean
   hasMargin?: boolean
   isDefault?: boolean
   isShowLabel?: boolean
+  error?: string | null
 }
 
 const props = withDefaults(defineProps<AppSelectProps>(), {
   isRequired: false,
   name: '',
   selectClass: '',
-  value: '',
+  modelValue: '',
   hasBlankOption: true,
   hasMargin: true,
   isDefault: false,
@@ -50,10 +54,10 @@ const props = withDefaults(defineProps<AppSelectProps>(), {
 })
 
 const emit = defineEmits<{
-  'update:value': [value: string | number]
+  'update:modelValue': [value: string | number]
 }>()
 
-const currentValue = ref<string | number>(props.value)
+const currentValue = ref<string | number>(props.modelValue)
 
 // Generate unique ID for the select
 const selectId = computed(() => {
@@ -64,21 +68,21 @@ const handleChange = (event: Event): void => {
   const target = event.target as HTMLSelectElement
   const newValue = target.value
   currentValue.value = newValue
-  emit('update:value', newValue)
+  emit('update:modelValue', newValue)
 }
 
 onMounted(() => {
-  if (props.isDefault && !props.value && props.options.length > 0) {
+  if (props.isDefault && !props.modelValue && props.options.length > 0) {
     const defaultValue = props.options[0].value
     currentValue.value = defaultValue
-    emit('update:value', defaultValue)
-  } else if (props.value) {
-    currentValue.value = props.value
+    emit('update:modelValue', defaultValue)
+  } else if (props.modelValue) {
+    currentValue.value = props.modelValue
   }
 })
 
 watch(
-  () => props.value,
+  () => props.modelValue,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
       currentValue.value = newValue

@@ -16,6 +16,7 @@
               :label="t(`${PATH_LANG}.payment.date`)"
               :is-show-label="false"
               :has-margin="false"
+              :error="errors[`${index}.payment_date`]"
             />
           </td>
           <td>
@@ -25,6 +26,7 @@
               :options="paymentMethodOptions"
               :is-show-label="false"
               :has-margin="false"
+              :error="errors[`${index}.payment_method`]"
             />
           </td>
           <td>
@@ -34,6 +36,7 @@
               :label="t(`${PATH_LANG}.payment.amount`)"
               :is-show-label="false"
               :has-margin="false"
+              :error="errors[`${index}.payment_amount`]"
             />
           </td>
           <td class="text-center">
@@ -78,7 +81,7 @@ const TABLE_HEADERS: ITableHeader[] = [
   {
     key: 'payment_date',
     label: t(`${PATH_LANG}.payment.date`),
-    width: 100
+    width: 120
   },
   {
     key: 'payment_method',
@@ -111,10 +114,14 @@ const handleRemovePayment = (index: number) => {
 watch(
   () => props.modelValue,
   (newValue) => {
-    if (JSON.stringify(newValue) !== JSON.stringify(formaData.value)) {
+    const newValueTmp = newValue.map((e) => ({ ...e, key: undefined }))
+    const formDataTmp = formaData.value.map((e) => ({ ...e, key: undefined }))
+
+    if (JSON.stringify(newValueTmp) !== JSON.stringify(formDataTmp)) {
       formaData.value = [...newValue]
     }
-  }
+  },
+  { deep: true }
 )
 
 watch(
