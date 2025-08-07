@@ -1,3 +1,15 @@
-export type SearchEventPayloadMapping = {
-  'search:search': object
+export interface ISearchPayload {
+  customerNameOrPhone?: string | null
+  startDate?: string | null
+  endDate?: string | null
+}
+
+export interface ISearchResponse {
+  id: number
+  repair_date: string
+  repair_description: string
+  customer: string
+  repair_cost: number
+  payment_status: number
+  warranty?: number | null
 }

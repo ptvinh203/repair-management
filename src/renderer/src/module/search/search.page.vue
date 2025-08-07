@@ -8,9 +8,9 @@
       <div class="row g-3">
         <div class="col-lg-6 col-md-6">
           <AppInput
-            v-model="searchData.customerSearch"
+            v-model="searchData.customerNameOrPhone"
             type="text"
-            name="customerSearch"
+            name="customerNameOrPhone"
             :label="$t(`${PATH_LANG}.search.customer-label`)"
             :placeholder="$t(`${PATH_LANG}.search.customer-placeholder`)"
             :has-margin="false"
@@ -28,14 +28,14 @@
               :is-show-label="false"
               :has-margin="false"
             />
-            <div class="col-md-2 align-self-center text-center">
-              <span class="text-muted">~</span>
+            <div class="col-md-1 align-self-center text-center">
+              <span class="text-muted">～</span>
             </div>
             <AppInput
               v-model="searchData.endDate"
               type="date"
               name="endDate"
-              wrapper-class="col-md-5"
+              wrapper-class="col-md-6"
               :label="''"
               :is-show-label="false"
               :has-margin="false"
@@ -67,6 +67,7 @@ import { getIndexTableHeader } from '@renderer/common/utils/table.util'
 import { useTableMaxHeight } from '@renderer/common/hook/height/useTableMaxHeight'
 import { useSearchStore } from './search.store'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
+import type { ISearchPayload, ISearchResponse } from './search.type'
 
 const { t } = useI18n()
 const PATH_LANG = 'modules.search'
@@ -78,11 +79,8 @@ const { maxHeight: tableMaxHeight } = useTableMaxHeight([
 ])
 const { handleSearch } = useSearchStore()
 
-const searchData = ref({
-  customerSearch: '',
-  startDate: '',
-  endDate: ''
-})
+const searchData = ref<ISearchPayload>({} as ISearchPayload)
+const searchResult = ref<ISearchResponse[]>([])
 
 const TABLE_HEADERS: ITableHeader[] = [
   getIndexTableHeader(),
@@ -132,8 +130,9 @@ const TABLE_HEADERS: ITableHeader[] = [
 
 const handleExport = (): void => {}
 
-const onSearch = () => {
-  handleSearch()
+const onSearch = async () => {
+  const response = await handleSearch(searchData.value)
+  searchResult.value = response.data as ISearchResponse[]
 }
 </script>
 
