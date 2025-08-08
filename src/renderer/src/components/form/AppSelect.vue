@@ -10,6 +10,7 @@
       :value="currentValue"
       :required="isRequired"
       :class="['form-select', selectClass]"
+      :disabled="disabled"
       @change="handleChange"
     >
       <option v-if="hasBlankOption" value=""></option>
@@ -40,6 +41,7 @@ interface AppSelectProps {
   isDefault?: boolean
   isShowLabel?: boolean
   error?: string | null
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<AppSelectProps>(), {
@@ -50,7 +52,8 @@ const props = withDefaults(defineProps<AppSelectProps>(), {
   hasBlankOption: true,
   hasMargin: true,
   isDefault: false,
-  isShowLabel: true
+  isShowLabel: true,
+  disabled: false
 })
 
 const emit = defineEmits<{

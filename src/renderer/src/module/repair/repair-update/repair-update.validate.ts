@@ -3,11 +3,11 @@ import { maxLength, numeric, required } from '@vuelidate/validators'
 import { useListValidation, useValidation } from '@renderer/common/hook/validation/useValidation'
 import { type Ref } from 'vue'
 import type { TValidationMessages } from '@renderer/common/hook/validation/validation.type'
-import type { IBasicRepairInfo, IPayment, IWarranty } from './repair-create.type'
+import type { IBasicRepairInfo, IPayment, IWarranty } from './repair-update.type'
 
 export const useRepairBasicInfoValidation = (formData: Ref<IBasicRepairInfo>) => {
   const { t } = useI18n()
-  const PATH_LANG = 'modules.repair.create'
+  const PATH_LANG = 'modules.repair.update'
 
   const messages: TValidationMessages = [
     {
@@ -102,10 +102,6 @@ export const useWarrantyValidation = (formData: Ref<IWarranty[]>) => {
   const rules = {
     warranty_date: {
       required
-    },
-    description: {
-      required,
-      maxLength: maxLength(500)
     }
   }
 

@@ -54,7 +54,7 @@ import { CONSTANTS } from '@renderer/common/constants'
 import { convertStrToDate, getCurrentDatePicker } from '@renderer/common/utils/date.utils'
 import { differenceInMonths } from 'date-fns'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
-import type { IWarranty } from '../repair-create.type'
+import type { IWarranty } from '../repair-update.type'
 
 const props = defineProps<{
   modelValue: IWarranty[]
@@ -70,7 +70,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
-const PATH_LANG = 'modules.repair.create'
+const PATH_LANG = 'modules.repair.update'
 const TABLE_HEADERS: ITableHeader[] = [
   {
     key: 'payment_date',

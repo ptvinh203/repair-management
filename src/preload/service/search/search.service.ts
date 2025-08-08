@@ -1,10 +1,34 @@
 import AbstractService from '../abstract.service'
+import { differenceInMonths } from 'date-fns'
+import { convertDateToResponse } from '@preload/common/utils/date.utls'
 import { getServerErrorResponse, getSuccessResponse } from '@preload/common/model/response'
 import type { AppResponse } from '@preload/common/model/response'
 import type { Prisma } from '@prisma/client'
 import type { ISearchPayload, ISearchResponse } from '@preload/controller/search/search.type'
 
 class SearchService extends AbstractService {
+  /**
+   * Retrieves the warranty status based on the warranty code and repair date.
+   *
+   * @param warrantyCd - The warranty code.
+   * @param repairDate - The date of the repair.
+   * @returns A promise that resolves to a number indicating the warranty status:
+   *          0: No warranty, 1: In warranty, 2: Out of warranty.
+   */
+  async getWarrantyStatus(warrantyCd: number | null, repairDate?: Date): Promise<number> {
+    if (warrantyCd === null || !repairDate) {
+      return 0
+    }
+
+    const warrantyMonth = await this.prisma.common.findFirst({
+      where: { key: '0000000002', deleted_at: null, cd: warrantyCd },
+      select: { extra_1: true }
+    })
+    const monthsDiff = differenceInMonths(new Date(), repairDate)
+
+    return monthsDiff <= Number(warrantyMonth?.extra_1 ?? 0) ? 1 : 2
+  }
+
   /**
    * Searches for repairs based on the provided search payload.
    *
@@ -13,7 +37,7 @@ class SearchService extends AbstractService {
    */
   async search(searchPayload: ISearchPayload): Promise<AppResponse<ISearchResponse[]>> {
     try {
-      const { customerNameOrPhone, startDate, endDate } = searchPayload
+      const { customerNameOrPhone, startDate, endDate, paymentStatus } = searchPayload
 
       // Build where conditions
       const whereConditions: Prisma.RepairWhereInput = {
@@ -50,6 +74,10 @@ class SearchService extends AbstractService {
         }
       }
 
+      if (paymentStatus) {
+        whereConditions.payment_status = Number(paymentStatus)
+      }
+
       const repairs = await this.prisma.repair.findMany({
         where: whereConditions,
         include: {
@@ -60,18 +88,22 @@ class SearchService extends AbstractService {
         }
       })
 
-      const searchResults: ISearchResponse[] = repairs.map((repair) => ({
-        id: repair.id,
-        repair_date: repair.repair_date.toISOString(),
-        repair_description: repair.description,
-        customer: `${repair.customer?.name} (${repair.customer?.phone})`,
-        repair_cost: repair.cost,
-        payment_status: repair.payment_status,
-        warranty: repair.warranty_period
-      }))
+      const searchResults: ISearchResponse[] = await Promise.all(
+        repairs.map(async (repair) => ({
+          id: repair.id,
+          repair_date: convertDateToResponse(repair.repair_date),
+          repair_description: repair.description,
+          customer: `${repair.customer?.name}／${repair.customer?.phone}`,
+          repair_cost: repair.cost,
+          payment_status: repair.payment_status,
+          warranty_status: await this.getWarrantyStatus(repair.warranty_period, repair.repair_date)
+        }))
+      )
 
       return getSuccessResponse(searchResults)
-    } catch {
+    } catch (error) {
+      console.error('Search error:', error)
+
       return getServerErrorResponse()
     }
   }

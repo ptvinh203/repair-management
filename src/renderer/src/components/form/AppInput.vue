@@ -1,5 +1,5 @@
 <template>
-  <div :class="[hasMargin ? 'mb-3' : wrapperClass]">
+  <div :class="[{ 'mb-3': hasMargin }, wrapperClass]">
     <label v-if="isShowLabel" :for="inputId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>
@@ -25,8 +25,6 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { CONSTANTS } from '@renderer/common/constants'
-import { convertDateToStr, convertStrToDate } from '@renderer/common/utils/date.utils'
 
 const props = withDefaults(
   defineProps<{
@@ -62,17 +60,6 @@ const inputId = computed(() => props.name || `input-${Math.random().toString(36)
 
 const handleInput = (event: Event): void => {
   const target = event.target as HTMLInputElement
-
-  if (props.type === 'date') {
-    const date = convertStrToDate(target.value, CONSTANTS.DATE_FORMAT.DATE_PICKER)
-
-    if (date) {
-      emit('update:modelValue', convertDateToStr(date))
-
-      return
-    }
-  }
-
   const newValue = props.type === 'number' ? Number(target.value) : target.value
   emit('update:modelValue', newValue)
 }
@@ -81,15 +68,7 @@ watch(
   () => props.modelValue,
   (newValue, oldValue) => {
     if (newValue !== oldValue) {
-      if (props.type === 'date' && typeof newValue === 'string') {
-        const newDate = convertStrToDate(newValue)
-
-        internalValue.value = newDate
-          ? convertDateToStr(newDate, CONSTANTS.DATE_FORMAT.DATE_PICKER)
-          : ''
-      } else {
-        internalValue.value = newValue
-      }
+      internalValue.value = newValue
     }
   }
 )

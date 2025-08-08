@@ -3,8 +3,10 @@ export const CONSTANTS = {
     SERVER_ERROR: 'ERR00000000'
   },
   MASTER_KEY: {
+    PAYMENT_STATUS: '0000000001',
     WARRANTY_TYPE: '0000000002',
-    PAYMENT_METHOD: '0000000003'
+    PAYMENT_METHOD: '0000000003',
+    WARRANTY_STATUS: '0000000004'
   },
   DATE_FORMAT: {
     DEFAULT: {
@@ -13,7 +15,7 @@ export const CONSTANTS = {
       JA: 'yyyy/MM/dd'
     },
     DATE_PICKER: 'yyyy-MM-dd',
-    PAYLOAD: 'dd/MM/yyyy',
-    PAYLOAD_DATETIME: 'dd/MM/yyyy HH:mm:ss'
+    DATETIME_LOCAL: "yyyy-MM-dd'T'HH:mm",
+    TIME: 'HH:mm:ss'
   }
 }

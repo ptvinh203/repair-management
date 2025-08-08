@@ -84,11 +84,18 @@ class MasterService extends AbstractService {
         orderBy: { display_order: 'asc' },
         select: {
           cd: true,
-          value: true
+          value: true,
+          extra_1: true,
+          extra_2: true,
+          extra_3: true,
+          extra_4: true,
+          extra_5: true
         }
       })
 
-      return getSuccessResponse(commons.map((item) => ({ key: item.value, value: item.cd })))
+      return getSuccessResponse(
+        commons.map((item) => ({ ...item, key: item.value, value: item.cd }))
+      )
     } catch {
       return getSuccessResponse([])
     }

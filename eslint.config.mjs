@@ -46,7 +46,8 @@ export default tseslint.config(
       'padding-line-between-statements': [
         'warn',
         { blankLine: 'always', prev: '*', next: 'return' }
-      ]
+      ],
+      'no-extra-boolean-cast': 'off'
     }
   },
   eslintConfigPrettier

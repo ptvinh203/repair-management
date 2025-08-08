@@ -71,14 +71,12 @@ const TABLE_HEADERS: ITableHeader[] = [
   {
     label: t(`${PATH_LANG}.table.name`),
     key: 'name',
-    isSortable: true,
     width: 250,
     align: 'start'
   },
   {
     label: t(`${PATH_LANG}.table.phone`),
     key: 'phone',
-    isSortable: true,
     width: 120,
     align: 'start'
   },

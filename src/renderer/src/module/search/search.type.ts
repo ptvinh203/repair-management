@@ -2,6 +2,7 @@ export interface ISearchPayload {
   customerNameOrPhone?: string
   startDate?: string
   endDate?: string
+  paymentStatus?: number
 }
 
 export interface ISearchResponse {
@@ -11,5 +12,5 @@ export interface ISearchResponse {
   customer: string
   repair_cost: number
   payment_status: number
-  warranty?: number | null
+  warranty_status: number
 }

@@ -65,7 +65,7 @@ import { getOptionsByKey } from '@renderer/common/utils/option.util'
 import { getCurrentDatePicker } from '@renderer/common/utils/date.utils'
 import type { ISelectOption } from '@renderer/common/utils/option.util'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
-import type { IPayment } from '../repair-create.type'
+import type { IPayment } from '../repair-update.type'
 
 const props = defineProps<{
   modelValue: IPayment[]
@@ -78,7 +78,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
-const PATH_LANG = 'modules.repair.create'
+const PATH_LANG = 'modules.repair.update'
 const TABLE_HEADERS: ITableHeader[] = [
   {
     key: 'payment_date',

@@ -27,3 +27,14 @@ export const handleResponse = (response: any): any => {
 
   return response.data
 }
+
+/**
+ * Deep clones an object using JSON serialization.
+ * This is a simple way to create a deep copy of an object.
+ *
+ * @param {T} obj - The object to clone.
+ * @returns {T} A deep clone of the original object.
+ */
+export const deepClone = <T>(obj: T): T => {
+  return JSON.parse(JSON.stringify(obj)) as T
+}

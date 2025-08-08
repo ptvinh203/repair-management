@@ -1,5 +1,5 @@
 <template>
-  <CardWrapper :title="$t(`${PATH_LANG}.title`)" card-class="position-relative" body-class="h-100">
+  <CardWrapper :title="$t(`${PATH_LANG}.title`)" card-class="position-relative h-100">
     <Loading key-loading="CUSTOMER_CREATE_FORM" />
     <AppInput
       v-model="formData.name"
