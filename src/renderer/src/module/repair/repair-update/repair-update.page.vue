@@ -21,14 +21,28 @@
               :error="basicInfoErrors.finish_date"
             />
           </div>
+          <div class="row">
+            <AppInput
+              v-model="customerData.name"
+              type="text"
+              wrapper-class="col-md-6"
+              :label="$t(`${PATH_LANG}.form.customer-name`)"
+              :disabled="true"
+            />
+            <AppInput
+              v-model="customerData.phone"
+              type="text"
+              wrapper-class="col-md-6"
+              :label="$t(`${PATH_LANG}.form.customer-phone`)"
+              :disabled="true"
+            />
+          </div>
           <AppInput
-            v-model="basicInfoData.customer_phone"
+            v-if="customerData.address"
+            v-model="customerData.address"
             type="text"
-            name="customer_phone"
-            :label="$t(`${PATH_LANG}.form.customer-phone`)"
+            :label="$t(`${PATH_LANG}.form.customer-address`)"
             :disabled="true"
-            :max-length="20"
-            :error="basicInfoErrors.customer_phone"
           />
           <AppTextarea
             v-model="basicInfoData.description"
@@ -150,6 +164,7 @@ import {
   useRepairBasicInfoValidation,
   useWarrantyValidation
 } from './repair-update.validate'
+import type { ICustomer } from '@renderer/module/customer/customer.type'
 import type { IPayment, IWarranty, IBasicRepairInfo, IRepairUpdateForm } from './repair-update.type'
 
 const { t } = useI18n()
@@ -161,6 +176,7 @@ const repairId = route.params.id as string
 const basicInfoData = ref<IBasicRepairInfo>({})
 const paymentData = ref<IPayment[]>([])
 const warrantyData = ref<IWarranty[]>([])
+const customerData = ref<ICustomer>({} as ICustomer)
 const warrantyOptions = ref<ISelectOption[]>([])
 const paymentStatusOptions = ref<ISelectOption[]>([])
 const warrantyErrorMsg = ref<string>('')
@@ -275,6 +291,7 @@ onMounted(async () => {
   }
   paymentData.value = payments || []
   warrantyData.value = warranties || []
+  customerData.value = data.customer || ({} as ICustomer)
   resetAllErrors()
 })
 </script>

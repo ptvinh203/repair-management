@@ -113,6 +113,7 @@ class RepairService extends AbstractService {
 
       const response: IRepairDetailResponse = {
         id: repair.id,
+        customer: repair.customer as any,
         basicInfo: {
           repair_date: convertDateToPayload(repair.repair_date, 'datetime-local'),
           finish_date: convertDateToPayload(repair.finish_date, 'datetime-local'),

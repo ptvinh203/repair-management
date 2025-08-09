@@ -79,6 +79,8 @@
       "delete-success": "Khách hàng đã được xóa thành công."
     },
     "search": {
+      "export-excel-confirm-message": "Bạn có chắc chắn muốn xuất công nợ không?",
+      "export-excel-success-message": "Xuất công nợ thành công.",
       "delete-success-message": "Đơn sửa chữa đã được xóa thành công.",
       "search": {
         "title": "Tìm kiếm đơn hàng",
@@ -97,7 +99,7 @@
           "repair-date": "Ngày sửa",
           "description": "Nội dung sửa chữa",
           "technician": "Người sửa",
-          "amount": "Số tiền phải trả",
+          "amount": "Chi phí sửa chữa",
           "payment-status": "Trạng thái thanh toán",
           "warranty": "Bảo hành",
           "actions": "Thao tác"
@@ -113,7 +115,7 @@
           "completion-date": "Ngày hoàn thành",
           "customer-phone": "Số điện thoại khách hàng",
           "description": "Nội dung sửa chữa",
-          "amount": "Số tiền (VND)",
+          "amount": "Chi phí sửa chữa (VND)",
           "warranty-duration": "Thời gian bảo hành",
           "select-warranty": "Chọn thời gian bảo hành",
           "required": "*"
@@ -147,8 +149,10 @@
           "finish-date": "Ngày hoàn thành",
           "completion-date": "Ngày hoàn thành",
           "customer-phone": "Số điện thoại khách hàng",
+          "customer-name": "Tên khách hàng",
+          "customer-address": "Địa chỉ khách hàng",
           "description": "Nội dung sửa chữa",
-          "amount": "Tổng số tiền (VND)",
+          "amount": "Chi phí sửa chữa (VND)",
           "remaining-amount": "Số tiền còn lại phải trả (VND)",
           "payment-status": "Trạng thái thanh toán",
           "warranty-duration": "Thời gian bảo hành",

@@ -1,5 +1,8 @@
+import type { ICustomer } from '@renderer/module/customer/customer.type'
+
 export interface IRepairUpdateForm {
   id?: number
+  customer?: ICustomer
   basicInfo: IBasicRepairInfo
   payments: IPayment[]
   warranties: IWarranty[]

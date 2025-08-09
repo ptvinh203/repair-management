@@ -34,5 +34,15 @@ export const useSearchStore = () => {
     }
   }, 'REPAIR_SEARCH_RESULT')
 
-  return { isSuccess, searchResponse, handleSearch, deleteRepair }
+  const exportExcel = withLoading(async (payload: ISearchPayload) => {
+    try {
+      const response = await window.searchController.exportExcel({ ...payload })
+
+      return response.success
+    } catch (error) {
+      return handleResponse(error)
+    }
+  }, 'REPAIR_SEARCH_RESULT')
+
+  return { isSuccess, searchResponse, handleSearch, deleteRepair, exportExcel }
 }

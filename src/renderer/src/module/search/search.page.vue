@@ -103,7 +103,7 @@ import { getIndexTableHeader } from '@renderer/common/utils/table.util'
 import { useTableMaxHeight } from '@renderer/common/hook/height/useTableMaxHeight'
 import { useSearchStore } from './search.store'
 import { formatPrice } from '@renderer/common/utils/price.utils'
-import { showDeleteConfirmModal } from '@renderer/components/modal'
+import { showConfirmModal, showDeleteConfirmModal } from '@renderer/components/modal'
 import type { ISelectOption } from '@renderer/common/utils/option.util'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
 import type { ISearchPayload } from './search.type'
@@ -112,12 +112,11 @@ import { showSuccessToast } from '@renderer/components/toast'
 const { t } = useI18n()
 const PATH_LANG = 'modules.search'
 
-const { maxHeight: tableMaxHeight } = useTableMaxHeight([
-  '.navbar',
-  '.search-wrapper',
-  '.card-header'
-])
-const { isSuccess, searchResponse, handleSearch, deleteRepair } = useSearchStore()
+const { maxHeight: tableMaxHeight } = useTableMaxHeight(
+  ['.navbar', '.search-wrapper', '.card-header'],
+  12
+)
+const { isSuccess, searchResponse, handleSearch, deleteRepair, exportExcel } = useSearchStore()
 
 const searchData = ref<ISearchPayload>({} as ISearchPayload)
 const paymentStatusOptions = ref<ISelectOption[]>([])
@@ -169,7 +168,15 @@ const TABLE_HEADERS: ITableHeader[] = [
   }
 ]
 
-const handleExport = (): void => {}
+const handleExport = async () => {
+  const isConfirmed = await showConfirmModal(t(`${PATH_LANG}.export-excel-confirm-message`))
+  if (isConfirmed) {
+    const success = await exportExcel(searchData.value)
+    if (success) {
+      showSuccessToast(t(`${PATH_LANG}.export-excel-success-message`))
+    }
+  }
+}
 
 const handleViewDetail = (repairId: number) => {
   router.push({ name: 'repair-update', params: { id: repairId } })

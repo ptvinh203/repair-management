@@ -100,6 +100,30 @@ class MasterService extends AbstractService {
       return getSuccessResponse([])
     }
   }
+
+  /**
+   * Retrieves a map of key-value pairs for a given key.
+   * This function fetches options from the Common table based on the provided key
+   * and returns them as a record where keys are the option keys and values are the option values.
+   *
+   * @param {string} key - The key to filter the Common table records
+   * @returns {Promise<Record<number, string>>} A promise that resolves to a record of key-value pairs
+   */
+  public async getKeyMapValue(key: string): Promise<Record<number, string>> {
+    const options = await this.getOptionsByKey(key)
+    if (!options.success) {
+      return {}
+    }
+
+    return options.data!.reduce(
+      (acc, item) => {
+        acc[item.value] = item.key
+
+        return acc
+      },
+      {} as Record<number, string>
+    )
+  }
 }
 
 export const masterService = new MasterService()

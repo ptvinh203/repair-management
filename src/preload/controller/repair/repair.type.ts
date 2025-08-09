@@ -1,3 +1,5 @@
+import type { ICustomerResponse } from '../customer/customer.type'
+
 export interface IRepairCreateForm {
   basicInfo: IBasicRepairInfo
   payments: IPayment[]
@@ -27,6 +29,7 @@ export interface IWarranty {
 
 export interface IRepairDetailResponse {
   id: number
+  customer: ICustomerResponse
   basicInfo: IBasicRepairInfo & {
     finish_date?: string
     payment_status: number
