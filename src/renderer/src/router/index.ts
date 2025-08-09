@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import searchRoute from '@renderer/module/search/search.route'
 import repairCreateRoute from '@renderer/module/repair/repair-create/repair-create.route'
 import customerRoute from '@renderer/module/customer/customer.route'
@@ -16,7 +16,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes
 })
 

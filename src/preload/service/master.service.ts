@@ -1,6 +1,8 @@
 import * as fs from 'fs'
-import { join } from 'path'
 import AbstractService from '@preload/service/abstract.service'
+import { join } from 'path'
+import { is } from '@electron-toolkit/utils'
+import { getExtraResourcePath } from '@preload/common/utils/path.utils'
 import { getSuccessResponse, type AppResponse } from '@preload/common/model/response'
 import type { IOptionList } from '@preload/controller/master/master.type'
 
@@ -21,7 +23,9 @@ class MasterService extends AbstractService {
         select: { key: true }
       })
 
-      const csvPath = join(__dirname, '../../prisma/data/common.csv')
+      const csvPath = is.dev
+        ? join(__dirname, '../../prisma/data/common.csv')
+        : getExtraResourcePath('prisma', 'data', 'common.csv')
       if (!fs.existsSync(csvPath)) {
         throw new Error(`CSV file not found at path: ${csvPath}`)
       }
