@@ -17,11 +17,12 @@ class MasterService extends AbstractService {
    */
   public async initializeData(): Promise<void> {
     try {
-      const distinctKeys = await this.prisma.common.findMany({
+      const commonEntities = await this.prisma.common.findMany({
         where: { deleted_at: null },
-        distinct: ['key'],
-        select: { key: true }
+        distinct: ['key', 'cd'],
+        select: { key: true, cd: true }
       })
+      const distinctKeys = commonEntities.map((e) => `${e.key}-${e.cd}`)
 
       const csvPath = is.dev
         ? join(__dirname, '../../prisma/data/common.csv')
@@ -39,7 +40,7 @@ class MasterService extends AbstractService {
 
       const commonData = dataLines.map((line) => {
         const columns = line.split(',')
-        keys.add(columns[0])
+        keys.add(`${columns[0]}-${columns[2]}`)
 
         return {
           key: columns[0],
@@ -56,7 +57,7 @@ class MasterService extends AbstractService {
       })
 
       // Check if the Common table already contains all distinct keys
-      const isSameAllElements = distinctKeys.every((item) => keys.has(item.key))
+      const isSameAllElements = distinctKeys.every((item) => keys.has(item))
       if (keys.size === distinctKeys.length && isSameAllElements) {
         return
       }

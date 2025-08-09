@@ -17,7 +17,10 @@
             v-for="header in headers"
             :key="header.key"
             :style="{ width: header.width ? `${header.width}px` : 'auto' }"
-            :class="['text-center align-middle', { 'sortable-header': header.isSortable }]"
+            :class="[
+              'text-center align-middle table-header',
+              { 'sortable-header': header.isSortable }
+            ]"
             scope="col"
             @click="handleSort(header.key, header.isSortable)"
           >

@@ -58,12 +58,12 @@ $table-row-highlight-color: #d0e8ff;
     z-index: 11;
   }
 
-  th:last-child {
+  th:first-child {
     background-color: $table-header-color;
     color: $table-header-text-color;
   }
 
-  td:last-child {
+  td:first-child {
     background-color: white;
   }
 }

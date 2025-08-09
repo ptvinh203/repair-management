@@ -122,9 +122,7 @@ class SearchService extends AbstractService {
 
       return getSuccessResponse(searchResults)
     } catch (error) {
-      console.error('Search error:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 
@@ -228,9 +226,7 @@ class SearchService extends AbstractService {
 
       return getSuccessResponse()
     } catch (error) {
-      console.error('Export Excel error:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 }

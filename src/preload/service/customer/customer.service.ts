@@ -31,8 +31,8 @@ class CustomerService extends AbstractService {
       await this.prisma.customer.create({ data: requestBody })
 
       return getSuccessResponse()
-    } catch {
-      return getServerErrorResponse()
+    } catch (error) {
+      return getServerErrorResponse(error)
     }
   }
 
@@ -59,8 +59,8 @@ class CustomerService extends AbstractService {
       })
 
       return getSuccessResponse(convertedCustomers)
-    } catch {
-      return getServerErrorResponse()
+    } catch (error) {
+      return getServerErrorResponse(error)
     }
   }
 
@@ -81,8 +81,8 @@ class CustomerService extends AbstractService {
       await this.prisma.customer.update({ where: { id }, data: { deleted_at: new Date() } })
 
       return getSuccessResponse()
-    } catch {
-      return getServerErrorResponse()
+    } catch (error) {
+      return getServerErrorResponse(error)
     }
   }
 
@@ -115,8 +115,8 @@ class CustomerService extends AbstractService {
       })
 
       return getSuccessResponse()
-    } catch {
-      return getServerErrorResponse()
+    } catch (error) {
+      return getServerErrorResponse(error)
     }
   }
 }

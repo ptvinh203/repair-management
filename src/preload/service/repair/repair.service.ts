@@ -77,9 +77,7 @@ class RepairService extends AbstractService {
 
       return getSuccessResponse()
     } catch (error) {
-      console.error('Error creating repair:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 
@@ -140,9 +138,7 @@ class RepairService extends AbstractService {
 
       return getSuccessResponse(response)
     } catch (error) {
-      console.error('Error fetching repair by ID:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 
@@ -286,9 +282,7 @@ class RepairService extends AbstractService {
 
       return getSuccessResponse()
     } catch (error) {
-      console.error('Error updating repair:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 
@@ -322,9 +316,7 @@ class RepairService extends AbstractService {
 
       return getSuccessResponse()
     } catch (error) {
-      console.error('Error deleting repair:', error)
-
-      return getServerErrorResponse()
+      return getServerErrorResponse(error)
     }
   }
 }

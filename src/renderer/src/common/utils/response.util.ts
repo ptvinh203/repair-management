@@ -18,7 +18,10 @@ export const handleResponse = (response: any): any => {
   }
 
   if (typeof response === 'object' && 'error' in response) {
-    const { code } = (response as AppResponse).error || {}
+    const { code, message } = (response as AppResponse).error || {}
+    if (message) {
+      console.error(`Error: ${message}`)
+    }
 
     if (code) {
       showErrorToast(code)

@@ -39,11 +39,14 @@ export const getErrorResponse = (errCode: string, message?: string): AppResponse
 }
 
 /**
- * Returns a server error response with an optional message.
+ * Returns a server error response with the specified error.
  *
- * @param {string} [message] - An optional message providing additional error details.
+ * @param {unknown} error - The error object representing the specific error.
  * @returns {AppResponse<null>} An object representing a server error response.
  */
-export const getServerErrorResponse = (message?: string): AppResponse => {
+export const getServerErrorResponse = (error?: unknown): AppResponse => {
+  const message = error instanceof Error ? error.message : 'An unexpected error occurred'
+  console.error('Server error:', message)
+
   return { success: false, error: { code: 'ERR00000000', message } }
 }
