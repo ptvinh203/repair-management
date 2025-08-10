@@ -1,0 +1,69 @@
+$table-header-color: #2c3e50;
+$table-header-text-color: white;
+$table-header-hover-color: rgba(255, 255, 255, 0.1);
+$table-header-sticky-color: #34495e;
+$table-row-highlight-color: #d0e8ff;
+
+.table {
+  .table-header {
+    background-color: $table-header-color;
+    color: $table-header-text-color;
+    position: sticky;
+    top: 0;
+    z-index: 11;
+  }
+
+  .sortable-header {
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      background-color: $table-header-hover-color !important;
+    }
+  }
+
+  .highlighted-row {
+    background-color: $table-row-highlight-color;
+  }
+}
+
+.table-fixed {
+  table-layout: fixed;
+  min-width: 100%;
+}
+
+.sticky-right-column {
+  th:last-child,
+  td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 11;
+  }
+
+  th:last-child {
+    background-color: $table-header-color;
+    color: $table-header-text-color;
+  }
+
+  td:last-child {
+    background-color: white;
+  }
+}
+
+.sticky-left-column {
+  th:first-child,
+  td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 11;
+  }
+
+  th:first-child {
+    background-color: $table-header-color;
+    color: $table-header-text-color;
+  }
+
+  td:first-child {
+    background-color: white;
+  }
+}

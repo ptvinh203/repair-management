@@ -32,7 +32,22 @@ export default tseslint.config(
             lang: 'ts'
           }
         }
-      ]
+      ],
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false
+        }
+      ],
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'padding-line-between-statements': [
+        'warn',
+        { blankLine: 'always', prev: '*', next: 'return' }
+      ],
+      'no-extra-boolean-cast': 'off'
     }
   },
   eslintConfigPrettier

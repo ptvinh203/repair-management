@@ -1,6 +1,9 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { masterService } from '@preload/service/master.service'
+import { initIpcMainHandlers } from '@main/ipc-main-init'
+import { copyDbFile } from '@preload/common/utils/path.utils'
 import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
@@ -22,6 +25,7 @@ function createWindow(): void {
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
+
     return { action: 'deny' }
   })
 
@@ -35,15 +39,14 @@ function createWindow(): void {
 }
 
 app.whenReady().then(() => {
+  copyDbFile() // Ensure the database file is copied to the user data path
   electronApp.setAppUserModelId('com.electron')
 
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
+  initIpcMainHandlers()
   createWindow()
 
   app.on('activate', function () {
@@ -51,6 +54,9 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
+
+  // Initialize the Common table with default data
+  masterService.initializeData()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
