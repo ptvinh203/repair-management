@@ -38,7 +38,7 @@ export const useSearchStore = () => {
     try {
       const response = await window.searchController.exportExcel({ ...payload })
 
-      return response.success
+      return handleResponse(response, true)
     } catch (error) {
       return handleResponse(error)
     }

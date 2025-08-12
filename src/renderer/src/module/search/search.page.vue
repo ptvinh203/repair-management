@@ -171,7 +171,7 @@ const TABLE_HEADERS: ITableHeader[] = [
 const handleExport = async () => {
   const isConfirmed = await showConfirmModal(t(`${PATH_LANG}.export-excel-confirm-message`))
   if (isConfirmed) {
-    const success = await exportExcel(searchData.value)
+    const { success } = await exportExcel(searchData.value)
     if (success) {
       showSuccessToast(t(`${PATH_LANG}.export-excel-success-message`))
     }
