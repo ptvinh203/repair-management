@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.ptvinh203.repairmanagement
 productName: Quản Lý Sửa Chữa
 directories:
   buildResources: build
@@ -13,6 +13,9 @@ asarUnpack:
   - resources/**
 win:
   executableName: Quản Lý Sửa Chữa
+  publish:
+    - provider: github
+      protocol: https
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

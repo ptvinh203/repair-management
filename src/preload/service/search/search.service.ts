@@ -1,7 +1,11 @@
 import AbstractService from '../abstract.service'
 import { differenceInMonths } from 'date-fns'
 import { convertDateToResponse, convertPayloadToDate } from '@preload/common/utils/date.utls'
-import { getServerErrorResponse, getSuccessResponse } from '@preload/common/model/response'
+import {
+  getErrorResponse,
+  getServerErrorResponse,
+  getSuccessResponse
+} from '@preload/common/model/response'
 import type { Prisma } from '@prisma/client'
 import type { AppResponse } from '@preload/common/model/response'
 import { ExcelUtils, type ExcelRow } from '@preload/common/utils/excel.utils'
@@ -194,6 +198,10 @@ class SearchService extends AbstractService {
         },
         orderBy: [{ repair_date: 'desc' }, { customer: { phone: 'asc' } }, { cost: 'asc' }]
       })
+      if ((repairs ?? []).length === 0) {
+        return getErrorResponse('ERR00000005')
+      }
+
       const paymentStatusMap = await masterService.getKeyMapValue('0000000001')
       const warrantyPeriodMap = await masterService.getKeyMapValue('0000000002')
 
@@ -222,6 +230,7 @@ class SearchService extends AbstractService {
           }
         }) ?? []
       )
+
       await ExcelUtils.exportToExcel(tableData)
 
       return getSuccessResponse()

@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { app } from 'electron'
 import ExcelJS from 'exceljs'
 import path from 'path'
@@ -26,7 +27,7 @@ export class ExcelUtils {
    */
   static async exportToExcel(data: ExcelRow[], options?: ExcelExportOptions): Promise<void> {
     const {
-      filename = `Công nợ_${new Date().toISOString()}.xlsx`,
+      filename = `CÔNG_NỢ_${format(new Date(), 'ddMMyyyy_HHmmss')}.xlsx`,
       sheetName = 'Sheet1',
       includeHeaders = true,
       autoWidth = true,

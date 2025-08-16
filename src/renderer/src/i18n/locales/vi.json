@@ -209,6 +209,7 @@
     "ERR00000001": "Số điện thoại đã tồn tại, vui lòng nhập số khác.",
     "ERR00000002": "Không tìm thấy khách hàng tương ứng.",
     "ERR00000003": "Bạn chưa chọn thời gian bảo hành.",
-    "ERR00000004": "Không tìm thấy đơn sửa chữa tương ứng"
+    "ERR00000004": "Không tìm thấy đơn sửa chữa tương ứng.",
+    "ERR00000005": "Không có dữ liệu công nợ nào."
   }
 }

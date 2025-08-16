@@ -1,16 +1,15 @@
 import { showErrorToast, showServerErrorToast } from '@renderer/components/toast'
-import {
-  getServerErrorResponse,
-  type AppResponse
-} from './../../../../preload/common/model/response'
+import { getServerErrorResponse } from './../../../../preload/common/model/response'
+import type { AppResponse } from './../../../../preload/common/model/response'
 
 /**
  * Handles the response from an API call, checking for errors and returning a structured response.
  *
  * @param {any} response - The response object from the API call.
+ * @param {boolean} includeStatus - Whether to include the status in the response.
  * @returns {any} A structured response indicating success or failure.
  */
-export const handleResponse = (response: any): any => {
+export const handleResponse = (response: any, includeStatus: boolean = false): any => {
   if (!response || response instanceof Error) {
     showServerErrorToast()
 
@@ -28,7 +27,9 @@ export const handleResponse = (response: any): any => {
     }
   }
 
-  return response.data
+  const { success, data } = response || {}
+
+  return includeStatus ? { success, data } : data
 }
 
 /**

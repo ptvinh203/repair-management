@@ -1,9 +1,10 @@
 {
   "name": "repair-management",
   "version": "1.0.0",
-  "description": "An Electron application with Vue and TypeScript",
+  "description": "Electron app for repair management",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "ptvinh203",
+  "repository": "https://github.com/ptvinh203/repair-management",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
@@ -18,7 +19,8 @@
     "build:unpack": "prisma generate && npm run build && electron-builder --dir",
     "build:win": "prisma generate && npm run build && electron-builder --win",
     "build:mac": "prisma generate && npm run build && electron-builder --mac",
-    "build:linux": "prisma generate && npm run build && electron-builder --linux"
+    "build:linux": "prisma generate && npm run build && electron-builder --linux",
+    "release": "prisma generate && npm run build && electron-builder"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
@@ -30,6 +32,7 @@
     "bootstrap-icons": "^1.13.1",
     "bootstrap-vue": "^2.23.1",
     "date-fns": "^4.1.0",
+    "electron-progressbar": "^2.2.1",
     "electron-updater": "^6.3.9",
     "exceljs": "^4.4.0",
     "pinia": "^3.0.3",
@@ -45,6 +48,7 @@
     "@vitejs/plugin-vue": "^5.2.3",
     "electron": "^35.1.5",
     "electron-builder": "^25.1.8",
+    "electron-icon-maker": "^0.0.5",
     "electron-vite": "^3.1.0",
     "eslint": "^9.24.0",
     "eslint-plugin-vue": "^10.0.0",
