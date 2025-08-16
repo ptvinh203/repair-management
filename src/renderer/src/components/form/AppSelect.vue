@@ -1,5 +1,5 @@
 <template>
-  <div :class="[{ 'mb-3': hasMargin }, wrapperClass]">
+  <div :class="[{ 'mb-2': hasMargin }, wrapperClass]">
     <label v-if="isShowLabel" :for="selectId" class="form-label">
       {{ label }}
       <span v-if="isRequired" class="text-danger">*</span>

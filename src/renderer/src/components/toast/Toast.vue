@@ -1,5 +1,5 @@
 <template>
-  <div class="position-fixed top-0 end-0 p-3 z-index-11">
+  <div class="position-fixed top-0 end-0 p-3 always-top">
     <div
       class="toast show"
       role="alert"
@@ -66,7 +66,7 @@ onMounted(() => {
 </script>
 
 <style lang="css" scoped>
-.z-index-11 {
-  z-index: 11;
+.always-top {
+  z-index: 99999;
 }
 </style>
