@@ -48,7 +48,7 @@ interface CardWrapperProps {
 
 withDefaults(defineProps<CardWrapperProps>(), {
   cardClass: '',
-  bodyClass: '',
+  bodyClass: 'pt-1 pb-1',
   headerClass: '',
   isShowActionButton: false,
   actionButtonClass: 'btn-primary btn-sm'

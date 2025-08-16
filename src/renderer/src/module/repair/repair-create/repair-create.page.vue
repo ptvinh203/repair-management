@@ -77,9 +77,9 @@
       </div>
     </div>
 
-    <CardWrapper card-class="mt-3" body-class="text-end">
+    <CardWrapper card-class="mt-2" body-class="px-3 py-2 text-end">
       <AppButton
-        button-class="btn-primary btn-lg px-4"
+        button-class="btn-primary"
         :title="$t(`${PATH_LANG}.actions.submit`)"
         @click="handleSubmit"
       />

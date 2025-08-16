@@ -58,8 +58,13 @@
       </template>
     </SearchWrapper>
 
-    <CardWrapper body-class="p-0" :max-height="tableMaxHeight">
-      <Table key-loading="REPAIR_SEARCH_RESULT" :headers="TABLE_HEADERS" :data="searchResponse">
+    <CardWrapper body-class="p-0">
+      <Table
+        key-loading="REPAIR_SEARCH_RESULT"
+        :headers="TABLE_HEADERS"
+        :data="searchResponse"
+        :max-height="tableMaxHeight"
+      >
         <template #cell:index="{ index }"> {{ index + 1 }} </template>
         <template #cell:repair_cost="{ value }"> {{ formatPrice(value) }} </template>
         <template #cell:payment_status="{ value }">
@@ -103,11 +108,11 @@ import { getIndexTableHeader } from '@renderer/common/utils/table.util'
 import { useTableMaxHeight } from '@renderer/common/hook/height/useTableMaxHeight'
 import { useSearchStore } from './search.store'
 import { formatPrice } from '@renderer/common/utils/price.utils'
+import { showSuccessToast } from '@renderer/components/toast'
 import { showConfirmModal, showDeleteConfirmModal } from '@renderer/components/modal'
 import type { ISelectOption } from '@renderer/common/utils/option.util'
 import type { ITableHeader } from '@renderer/components/table/table.tyle'
 import type { ISearchPayload } from './search.type'
-import { showSuccessToast } from '@renderer/components/toast'
 
 const { t } = useI18n()
 const PATH_LANG = 'modules.search'
@@ -127,7 +132,7 @@ const TABLE_HEADERS: ITableHeader[] = [
   {
     label: t(`${PATH_LANG}.results.table.repair-date`),
     key: 'repair_date',
-    width: 150,
+    width: 130,
     align: 'start'
   },
   {
@@ -145,25 +150,25 @@ const TABLE_HEADERS: ITableHeader[] = [
   {
     label: t(`${PATH_LANG}.results.table.amount`),
     key: 'repair_cost',
-    width: 100,
+    width: 150,
     align: 'end'
   },
   {
     label: t(`${PATH_LANG}.results.table.payment-status`),
     key: 'payment_status',
-    width: 100,
+    width: 180,
     align: 'center'
   },
   {
     label: t(`${PATH_LANG}.results.table.warranty`),
     key: 'warranty_status',
-    width: 100,
+    width: 135,
     align: 'center'
   },
   {
     label: t(`${PATH_LANG}.results.table.actions`),
     key: 'actions',
-    width: 120,
+    width: 160,
     isSticky: true
   }
 ]

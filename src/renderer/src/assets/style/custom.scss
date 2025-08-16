@@ -9,8 +9,8 @@ $btn-hover-border-shade-amount: 20%;
 $btn-hover-border-tint-amount: 10%;
 
 // Import Bootstrap SCSS to use its functions
-@use "sass:color";
-@import "bootstrap/dist/css/bootstrap.css";
+@use 'sass:color';
+@import 'bootstrap/dist/css/bootstrap.css';
 
 // Custom button hover states
 .btn-primary {

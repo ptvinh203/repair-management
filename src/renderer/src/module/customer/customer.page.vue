@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid py-3">
     <div class="row g-3">
-      <div class="col-lg-6">
+      <div class="col-lg-5">
         <CustomerUpdatePage
           v-if="isEdit && selectedCustomer"
           :customer="selectedCustomer"
@@ -10,17 +10,14 @@
         />
         <CustomerCreatePage v-else @created="fetchData" />
       </div>
-      <div class="col-lg-6">
-        <CardWrapper
-          body-class="p-0"
-          :title="$t(`${PATH_LANG}.table.title`)"
-          :max-height="tableMaxHeight"
-        >
+      <div class="col-lg-7">
+        <CardWrapper body-class="p-0" :title="$t(`${PATH_LANG}.table.title`)">
           <Table
             key-loading="CUSTOMER_TABLE"
             :headers="TABLE_HEADERS"
             :data="customers"
             :hightlighted-row="selectedCustomerIndex"
+            :max-height="tableMaxHeight"
           >
             <template #cell:index="{ index }"> {{ index + 1 }} </template>
             <template #cell:actions="{ row, index }">

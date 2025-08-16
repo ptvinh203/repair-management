@@ -1,5 +1,8 @@
 <template>
-  <div class="table-responsive position-relative mb-0">
+  <div
+    class="table-responsive position-relative mb-0"
+    :style="{ maxHeight: props.maxHeight ? `${maxHeight}px` : 'none' }"
+  >
     <Loading :key-loading="keyLoading" />
     <table
       :class="[
@@ -44,7 +47,11 @@
             :class="[
               'align-middle',
               `text-${header.align || 'center'}`,
-              rowIndex === hightlightedRow ? 'highlighted-row' : 'bg-white'
+              rowIndex === hightlightedRow
+                ? 'highlighted-row'
+                : header.isSticky
+                  ? 'sticky-bg-color'
+                  : 'bg-white'
             ]"
           >
             <slot
@@ -77,6 +84,7 @@ const props = withDefaults(
     hightlightedRow?: number
     isTableFixed?: boolean
     isOnlyHeader?: boolean
+    maxHeight?: number
   }>(),
   {
     isTableFixed: true

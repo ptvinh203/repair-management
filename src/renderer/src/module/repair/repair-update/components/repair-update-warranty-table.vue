@@ -1,12 +1,11 @@
 <template>
   <CardWrapper
     body-class="p-0"
-    :max-height="330"
     :title="$t(`${PATH_LANG}.warranty.title`)"
     :is-show-action-button="true"
     @action-button-clicked="handleAddWarranty"
   >
-    <Table :headers="TABLE_HEADERS" :data="[]" :is-only-header="true">
+    <Table :headers="TABLE_HEADERS" :data="[]" :is-only-header="true" :max-height="330">
       <tbody>
         <tr v-for="(warranty, index) in formData" :key="warranty.key">
           <td>
