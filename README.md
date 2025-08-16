@@ -39,3 +39,9 @@ $ yarn build:linux
 $ npx prisma generate
 $ npx prisma migrate dev --name ${name}
 ```
+
+### Generate icon
+
+```bash
+$ ./node_modules/.bin/electron-icon-maker --input=/absolute/path/file.png --output=./relative/path/to/folder
+```
