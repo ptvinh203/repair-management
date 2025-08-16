@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.ptvinh203.repairmanagement
 productName: Quản Lý Sửa Chữa
 directories:
   buildResources: build

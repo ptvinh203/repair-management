@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { masterService } from '@preload/service/master.service'
 import { initIpcMainHandlers } from '@main/ipc-main-init'
 import { copyDbFile } from '@preload/common/utils/path.utils'
+import { checkAndApplyUpdates } from './updater'
 import iconPng from '../../resources/icon.png?asset'
 import iconIco from '../../resources/icon.ico?asset'
 import iconIcns from '../../resources/icon.icns?asset'
@@ -49,6 +50,11 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  // Check and apply updates after 1.5 seconds
+  setTimeout(() => {
+    checkAndApplyUpdates()
+  }, 1500)
 }
 
 app.whenReady().then(() => {
