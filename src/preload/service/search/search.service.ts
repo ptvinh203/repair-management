@@ -10,7 +10,6 @@ import type { Prisma } from '@prisma/client'
 import type { AppResponse } from '@preload/common/model/response'
 import { ExcelUtils, type ExcelRow } from '@preload/common/utils/excel.utils'
 import type { ISearchPayload, ISearchResponse } from '@preload/controller/search/search.type'
-import { formatPrice } from '@preload/common/utils/price.utils'
 import { masterService } from '../master.service'
 
 class SearchService extends AbstractService {
@@ -217,9 +216,9 @@ class SearchService extends AbstractService {
             'Số điện thoại': repair.customer?.phone,
             'Ngày sửa chữa': convertDateToResponse(repair.repair_date),
             'Mô tả sửa chữa': repair.description,
-            'Chi phí sửa chữa': formatPrice(repair.cost),
+            'Chi phí sửa chữa': repair.cost,
             'Trạng thái thanh toán': paymentStatusMap[repair.payment_status],
-            'Số tiền thanh toán': formatPrice(currentPaymentAmount),
+            'Số tiền thanh toán': currentPaymentAmount,
             'Thời gian bảo hành': warrantyPeriodMap[repair.warranty_period ?? -1] ?? '',
             'Trạng thái bảo hành': await this.getWarrantyStatus(
               repair.warranty_period,
