@@ -10,7 +10,7 @@ export const checkAndApplyUpdates = () => {
     dialog.showErrorBox('Đã xảy ra lỗi', err + ' đã xảy ra trong khi cố gắng tìm kiếm bản cập nhật')
   })
 
-  let progressBar
+  let progressBar: ProgressBar | undefined = undefined
 
   // Update available
   autoUpdater.on('update-available', () => {
@@ -41,7 +41,11 @@ export const checkAndApplyUpdates = () => {
                 'Bản cập nhật đã được tải xuống. Chúng tôi đang chuẩn bị cài đặt.'
             })
             .on('progress', function (value) {
-              progressBar.detail = `Giá trị ${Number(value).toFixed(2)} trong tổng số ${progressBar.getOptions().maxValue}...`
+              try {
+                progressBar.detail = `Đã tải ${Number(value).toFixed(2)}%`
+              } catch (error) {
+                console.error('Error updating progress bar detail:', error)
+              }
             })
         }
       })
@@ -55,8 +59,10 @@ export const checkAndApplyUpdates = () => {
 
   // Download progress
   autoUpdater.on('download-progress', (progressObj) => {
-    // Update the progress bar with the current progress
-    progressBar.value = progressObj.percent
+    if (progressBar && progressBar.isInProgress()) {
+      // Update the progress bar with the current progress
+      progressBar.value = progressObj.percent
+    }
   })
 
   // Error
