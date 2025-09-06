@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { withLoading } from '@renderer/common/utils/loading.util'
-import { handleResponse } from '@renderer/common/utils/response.util'
+import { deepClone, handleResponse } from '@renderer/common/utils/response.util'
 import type { ISearchPayload, ISearchResponse } from './search.type'
 
 export const useSearchStore = () => {
@@ -13,7 +13,7 @@ export const useSearchStore = () => {
 
   const handleSearch = withLoading(async (payload: ISearchPayload) => {
     try {
-      const response = await window.searchController.search({ ...payload })
+      const response = await window.searchController.search(deepClone(payload))
       searchResponse.value = response.data || []
 
       return handleResponse(response)
@@ -36,7 +36,7 @@ export const useSearchStore = () => {
 
   const exportExcel = withLoading(async (payload: ISearchPayload) => {
     try {
-      const response = await window.searchController.exportExcel({ ...payload })
+      const response = await window.searchController.exportExcel(deepClone(payload))
 
       return handleResponse(response, true)
     } catch (error) {

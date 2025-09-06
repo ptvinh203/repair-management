@@ -274,5 +274,5 @@ defineOptions({ inheritAttrs: false })
 </script>
 
 <style lang="scss" scoped>
-@import './app-suggestion.style.scss';
+@import url('./app-suggestion.style.scss');
 </style>

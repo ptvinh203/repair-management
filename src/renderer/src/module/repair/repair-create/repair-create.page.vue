@@ -199,7 +199,7 @@ watch(
   () => basicInfoData.value.customer,
   (newValue, oldValue) => {
     if (!isEquals(newValue, oldValue)) {
-      basicInfoData.value.customer_phone = newValue?.id
+      basicInfoData.value.customer_phone = newValue?.id || newValue?.text || ''
     }
   }
 )
