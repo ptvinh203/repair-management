@@ -113,7 +113,8 @@
         "form": {
           "repair-date": "Ngày sửa",
           "completion-date": "Ngày hoàn thành",
-          "customer-phone": "Số điện thoại khách hàng",
+          "customer-phone": "Khách hàng",
+          "customer-phone-placeholder": "Nhập số điện thoại hoặc tên khách hàng ...",
           "description": "Nội dung sửa chữa",
           "amount": "Chi phí sửa chữa (VND)",
           "warranty-duration": "Thời gian bảo hành",

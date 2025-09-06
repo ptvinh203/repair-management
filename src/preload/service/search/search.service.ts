@@ -113,7 +113,7 @@ class SearchService extends AbstractService {
           id: repair.id,
           repair_date: convertDateToResponse(repair.repair_date),
           repair_description: repair.description,
-          customer: `${repair.customer?.name}／${repair.customer?.phone}`,
+          customer: `${repair.customer?.phone}／${repair.customer?.name}`,
           repair_cost: repair.cost,
           payment_status: repair.payment_status,
           warranty_status: (await this.getWarrantyStatus(

@@ -2,6 +2,7 @@ import type { CustomerController } from './controller/customer/customer.controll
 import type { MasterController } from './controller/master/master.controller'
 import type { SearchController } from './controller/search/search.controller'
 import type { RepairController } from './controller/repair/repair.controller'
+import type { SuggestionController } from './controller/suggestion/suggestion.controller'
 
 type ExtractedStaticMethods<T> = {
   [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K]
@@ -13,5 +14,6 @@ declare global {
     customerController: ExtractedStaticMethods<typeof CustomerController>
     masterController: ExtractedStaticMethods<typeof MasterController>
     repairController: ExtractedStaticMethods<typeof RepairController>
+    suggestionController: ExtractedStaticMethods<typeof SuggestionController>
   }
 }

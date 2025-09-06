@@ -1,0 +1,32 @@
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.dropdown {
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+// Custom scrollbar for dropdown
+div[style*="max-height: 200px"] {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bs-gray-400) var(--bs-gray-100);
+}
+
+div[style*="max-height: 200px"]::-webkit-scrollbar {
+  width: 6px;
+}
+
+div[style*="max-height: 200px"]::-webkit-scrollbar-track {
+  background: var(--bs-gray-100);
+}
+
+div[style*="max-height: 200px"]::-webkit-scrollbar-thumb {
+  background: var(--bs-gray-400);
+  border-radius: 3px;
+}
+
+div[style*="max-height: 200px"]::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-gray-500);
+}
