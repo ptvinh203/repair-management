@@ -3,6 +3,7 @@ import { SearchController } from '@preload/controller/search/search.controller'
 import { CustomerController } from '@preload/controller/customer/customer.controller'
 import { MasterController } from '@preload/controller/master/master.controller'
 import { RepairController } from '@preload/controller/repair/repair.controller'
+import { SuggestionController } from '@preload/controller/suggestion/suggestion.controller'
 
 /**
  * Context bridge API
@@ -11,6 +12,7 @@ contextBridge.exposeInMainWorld('customerController', extractStaticMethods(Custo
 contextBridge.exposeInMainWorld('searchController', extractStaticMethods(SearchController))
 contextBridge.exposeInMainWorld('masterController', extractStaticMethods(MasterController))
 contextBridge.exposeInMainWorld('repairController', extractStaticMethods(RepairController))
+contextBridge.exposeInMainWorld('suggestionController', extractStaticMethods(SuggestionController))
 
 type ExtractedStaticMethods<T> = {
   [K in keyof T as T[K] extends (...args: any[]) => any ? K : never]: T[K]

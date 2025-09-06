@@ -11,13 +11,13 @@
             :is-required="true"
             :error="basicInfoErrors.repair_date"
           />
-          <AppInput
-            v-model="basicInfoData.customer_phone"
-            type="text"
-            name="customer_phone"
+          <AppSuggestion
+            v-model="basicInfoData.customer"
+            type="customer"
             :label="$t(`${PATH_LANG}.form.customer-phone`)"
+            :placeholder="$t(`${PATH_LANG}.form.customer-phone-placeholder`)"
             :is-required="true"
-            :max-length="20"
+            :max-length="121"
             :error="basicInfoErrors.customer_phone"
           />
           <AppTextarea
@@ -93,6 +93,7 @@ import { useI18n } from 'vue-i18n'
 import AppButton from '@renderer/components/form/AppButton.vue'
 import AppInput from '@renderer/components/form/AppInput.vue'
 import AppSelect from '@renderer/components/form/AppSelect.vue'
+import AppSuggestion from '@renderer/components/form/suggestion/AppSuggestion.vue'
 import AppTextarea from '@renderer/components/form/AppTextarea.vue'
 import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'
 import PaymentTable from './components/repair-create-payment-table.vue'
@@ -100,6 +101,9 @@ import WarrantyTable from './components/repair-create-warranty-table.vue'
 import Loading from '@renderer/components/loading/Loading.vue'
 import { CONSTANTS } from '@renderer/common/constants'
 import { getCurrentDatePicker } from '@renderer/common/utils/date.utils'
+import { useRepairStore } from './repair-create.store'
+import { showSuccessToast } from '@renderer/components/toast'
+import { isEquals } from '@renderer/common/utils/compare.utils'
 import {
   getExtraByCd,
   getOptionsByKey,
@@ -111,8 +115,6 @@ import {
   useWarrantyValidation
 } from './repair-create.validate'
 import type { IPayment, IWarranty, IBasicRepairInfo } from './repair-create.type'
-import { useRepairStore } from './repair-create.store'
-import { showSuccessToast } from '@renderer/components/toast'
 
 const { t } = useI18n()
 const PATH_LANG = 'modules.repair.create'
@@ -189,6 +191,15 @@ watch(
   (newValue) => {
     if (!!newValue) {
       warrantyErrorMsg.value = ''
+    }
+  }
+)
+
+watch(
+  () => basicInfoData.value.customer,
+  (newValue, oldValue) => {
+    if (!isEquals(newValue, oldValue)) {
+      basicInfoData.value.customer_phone = newValue?.id || newValue?.text || ''
     }
   }
 )

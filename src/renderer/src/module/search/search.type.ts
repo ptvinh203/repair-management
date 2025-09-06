@@ -1,5 +1,7 @@
+import type { ISuggestion } from '@renderer/components/form/suggestion/app-suggestion.type'
+
 export interface ISearchPayload {
-  customerNameOrPhone?: string
+  customer?: ISuggestion
   startDate?: string
   endDate?: string
   paymentStatus?: number

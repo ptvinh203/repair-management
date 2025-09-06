@@ -1,3 +1,5 @@
+import type { ISuggestion } from '@renderer/components/form/suggestion/app-suggestion.type'
+
 export interface IRepairCreateForm {
   basicInfo: IBasicRepairInfo
   payments: IPayment[]
@@ -6,6 +8,7 @@ export interface IRepairCreateForm {
 
 export interface IBasicRepairInfo {
   repair_date?: string
+  customer?: ISuggestion
   customer_phone?: string
   description?: string
   cost?: number

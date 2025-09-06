@@ -46,12 +46,12 @@ class SearchService extends AbstractService {
   /**
    * Searches for repairs based on the provided search payload.
    *
-   * @param searchPayload - The search payload containing customer name or phone, start date, and end date.
+   * @param searchPayload - The search payload containing customer suggestion, start date, and end date.
    * @returns A promise that resolves to an AppResponse containing an array of search results.
    */
   async search(searchPayload: ISearchPayload): Promise<AppResponse<ISearchResponse[]>> {
     try {
-      const { customerNameOrPhone, startDate, endDate, paymentStatus } = searchPayload
+      const { customer, startDate, endDate, paymentStatus } = searchPayload
 
       // Build where conditions
       const whereConditions: Prisma.RepairWhereInput = {
@@ -76,19 +76,13 @@ class SearchService extends AbstractService {
       }
 
       // Add customer search condition
-      if (customerNameOrPhone) {
+      if (customer) {
+        const { id, text } = customer
         whereConditions.customer = {
           OR: [
-            {
-              name: {
-                contains: customerNameOrPhone
-              }
-            },
-            {
-              phone: {
-                contains: customerNameOrPhone
-              }
-            }
+            ...(id
+              ? [{ phone: id }]
+              : [{ phone: { contains: text } }, { name: { contains: text } }])
           ],
           deleted_at: null
         }
@@ -113,7 +107,7 @@ class SearchService extends AbstractService {
           id: repair.id,
           repair_date: convertDateToResponse(repair.repair_date),
           repair_description: repair.description,
-          customer: `${repair.customer?.name}／${repair.customer?.phone}`,
+          customer: `${repair.customer?.phone}／${repair.customer?.name}`,
           repair_cost: repair.cost,
           payment_status: repair.payment_status,
           warranty_status: (await this.getWarrantyStatus(
@@ -132,12 +126,12 @@ class SearchService extends AbstractService {
   /**
    * Exports search results to an Excel file based on the provided search payload.
    *
-   * @param searchPayload - The search payload containing customer name or phone, start date, end date, and payment status.
+   * @param searchPayload - The search payload containing customer suggestion, start date, end date, and payment status.
    * @returns A promise that resolves to an AppResponse indicating success or failure.
    */
   async exportExcel(searchPayload: ISearchPayload): Promise<AppResponse> {
     try {
-      const { customerNameOrPhone, startDate, endDate, paymentStatus } = searchPayload
+      const { customer, startDate, endDate, paymentStatus } = searchPayload
 
       // Build where conditions
       const whereConditions: Prisma.RepairWhereInput = {
@@ -162,19 +156,13 @@ class SearchService extends AbstractService {
       }
 
       // Add customer search condition
-      if (customerNameOrPhone) {
+      if (customer) {
+        const { id, text } = customer
         whereConditions.customer = {
           OR: [
-            {
-              name: {
-                contains: customerNameOrPhone
-              }
-            },
-            {
-              phone: {
-                contains: customerNameOrPhone
-              }
-            }
+            ...(id
+              ? [{ phone: id }]
+              : [{ phone: { contains: text } }, { name: { contains: text } }])
           ],
           deleted_at: null
         }

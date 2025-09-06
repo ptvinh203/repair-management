@@ -7,10 +7,9 @@
     >
       <div class="row g-3">
         <div class="col-lg-3 col-md-3">
-          <AppInput
-            v-model="searchData.customerNameOrPhone"
-            type="text"
-            name="customerNameOrPhone"
+          <AppSuggestion
+            v-model="searchData.customer"
+            type="customer"
             :label="$t(`${PATH_LANG}.search.customer-label`)"
             :placeholder="$t(`${PATH_LANG}.search.customer-placeholder`)"
             :has-margin="false"
@@ -99,6 +98,7 @@ import router from '@renderer/router'
 import AppButton from '@renderer/components/form/AppButton.vue'
 import AppInput from '@renderer/components/form/AppInput.vue'
 import AppSelect from '@renderer/components/form/AppSelect.vue'
+import AppSuggestion from '@renderer/components/form/suggestion/AppSuggestion.vue'
 import SearchWrapper from '@renderer/components/wrapper/SearchWrapper.vue'
 import Table from '@renderer/components/table/Table.vue'
 import CardWrapper from '@renderer/components/wrapper/CardWrapper.vue'

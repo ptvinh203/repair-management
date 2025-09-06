@@ -33,8 +33,7 @@ export const useRepairBasicInfoValidation = (formData: Ref<IBasicRepairInfo>) =>
       required
     },
     customer_phone: {
-      required,
-      maxLength: maxLength(20)
+      required
     },
     description: {
       required,

@@ -1,5 +1,7 @@
+import type { ISuggestion } from '@preload/controller/suggestion/suggestion.type'
+
 export interface ISearchPayload {
-  customerNameOrPhone?: string | null
+  customer?: ISuggestion
   startDate?: string | null
   endDate?: string | null
   paymentStatus?: number | null
