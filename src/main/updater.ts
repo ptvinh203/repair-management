@@ -1,5 +1,6 @@
 import { autoUpdater } from 'electron-updater'
 import { dialog } from 'electron'
+import { log } from '@preload/common/utils/log.utils'
 import ProgressBar from 'electron-progressbar'
 
 autoUpdater.autoDownload = false
@@ -44,7 +45,7 @@ export const checkAndApplyUpdates = () => {
               try {
                 progressBar.detail = `Đã tải ${Number(value).toFixed(2)}%`
               } catch (error) {
-                console.error('Error updating progress bar detail:', error)
+                log('error', `[Updater] Error updating progress bar detail: ${error}`)
               }
             })
         }

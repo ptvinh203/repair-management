@@ -46,7 +46,6 @@ export const getErrorResponse = (errCode: string, message?: string): AppResponse
  */
 export const getServerErrorResponse = (error?: unknown): AppResponse => {
   const message = error instanceof Error ? error.message : 'An unexpected error occurred'
-  console.error('Server error:', message)
 
   return { success: false, error: { code: 'ERR00000000', message } }
 }

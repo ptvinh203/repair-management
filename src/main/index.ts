@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { masterService } from '@preload/service/master.service'
 import { initIpcMainHandlers } from '@main/ipc-main-init'
+import { initializeLogger } from '@preload/common/utils/log.utils'
 import { copyDbFile } from '@preload/common/utils/path.utils'
 import { checkAndApplyUpdates } from './updater'
 import iconPng from '../../resources/icon.png?asset'
@@ -73,8 +74,9 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 
-  // Initialize handlers and Common table with default data
+  // Initialize handlers, logger and Common table with default data
   initIpcMainHandlers()
+  initializeLogger(!is.dev)
   masterService.initializeData()
 
   // Set dock icon
