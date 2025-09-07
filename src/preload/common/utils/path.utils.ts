@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { is } from '@electron-toolkit/utils'
 import { app } from 'electron'
+import { log } from './log.utils'
 
 /**
  * Utility function to get the path for extra resources.
@@ -57,7 +58,10 @@ export const copyFile = async (source: string, destination: string) => {
   try {
     fs.copyFileSync(source, destination, fs.constants.COPYFILE_EXCL)
   } catch (err) {
-    console.error(`Error copying file: ${err}`)
+    log(
+      'error',
+      `[path.utils] Error copying file from ${source} to ${destination}: ${(err as Error).message}`
+    )
   }
 }
 

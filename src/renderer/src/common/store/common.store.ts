@@ -16,5 +16,9 @@ export const useCommonStore = defineStore('common', () => {
     return (key && keyLoading.value[key]) || false
   }
 
-  return { enableLoading, disableLoading, isLoading }
+  const getCurrentKeyLoading = (): string | undefined => {
+    return Object.keys(keyLoading.value).find((key) => keyLoading.value[key])
+  }
+
+  return { enableLoading, disableLoading, isLoading, getCurrentKeyLoading }
 })

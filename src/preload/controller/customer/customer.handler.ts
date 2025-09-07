@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { ipcMainHandler } from '@preload/common/utils/event-channel.utils'
 import { customerService } from '@preload/service/customer/customer.service'
 import {
   DELETE_CUSTOMERS_CHANNEL,
@@ -9,19 +9,19 @@ import {
 import type { ICustomerCreateRequest } from './customer.type'
 
 export const customerHandler = () => {
-  ipcMain.handle(SUBMIT_FORM_CHANNEL, (_, formData: ICustomerCreateRequest) => {
+  ipcMainHandler(SUBMIT_FORM_CHANNEL, (formData: ICustomerCreateRequest) => {
     return customerService.createCustomer(formData)
   })
 
-  ipcMain.handle(GET_CUSTOMERS_CHANNEL, () => {
+  ipcMainHandler(GET_CUSTOMERS_CHANNEL, () => {
     return customerService.getCustomers()
   })
 
-  ipcMain.handle(DELETE_CUSTOMERS_CHANNEL, (_, id: number) => {
+  ipcMainHandler(DELETE_CUSTOMERS_CHANNEL, (id: number) => {
     return customerService.deleteCustomer(id)
   })
 
-  ipcMain.handle(UPDATE_CUSTOMER_CHANNEL, (_, id: number, formData: ICustomerCreateRequest) => {
+  ipcMainHandler(UPDATE_CUSTOMER_CHANNEL, (id: number, formData: ICustomerCreateRequest) => {
     return customerService.updateCustomer(id, formData)
   })
 }

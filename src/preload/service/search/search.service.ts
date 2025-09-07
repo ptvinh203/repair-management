@@ -55,6 +55,7 @@ class SearchService extends AbstractService {
 
       // Build where conditions
       const whereConditions: Prisma.RepairWhereInput = {
+        customer: { deleted_at: null },
         deleted_at: null
       }
 

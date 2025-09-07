@@ -1,4 +1,5 @@
 import { showErrorToast, showServerErrorToast } from '@renderer/components/toast'
+import { useCommonStore } from '@renderer/common/store/common.store'
 import { getServerErrorResponse } from './../../../../preload/common/model/response'
 import type { AppResponse } from './../../../../preload/common/model/response'
 
@@ -10,7 +11,10 @@ import type { AppResponse } from './../../../../preload/common/model/response'
  * @returns {any} A structured response indicating success or failure.
  */
 export const handleResponse = (response: any, includeStatus: boolean = false): any => {
+  const commonStore = useCommonStore()
   if (!response || response instanceof Error) {
+    const keyLoading = commonStore.getCurrentKeyLoading()
+    window.masterController.log('error', `[${keyLoading}] Error: ${response?.message || response}`)
     showServerErrorToast()
 
     return getServerErrorResponse()

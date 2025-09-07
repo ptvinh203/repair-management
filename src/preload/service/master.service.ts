@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import AbstractService from '@preload/service/abstract.service'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
+import { log } from '@preload/common/utils/log.utils'
 import { getExtraResourcePath } from '@preload/common/utils/path.utils'
 import { getSuccessResponse, type AppResponse } from '@preload/common/model/response'
 import type { IOptionList } from '@preload/controller/master/master.type'
@@ -64,13 +65,15 @@ class MasterService extends AbstractService {
 
       // If there are existing records, delete them before inserting new data
       if (distinctKeys.length > 0) {
+        log('info', '[MasterService] Clearing existing Common table data before re-initialization')
         await this.prisma.common.deleteMany()
       }
 
       // Insert all data in a single transaction
+      log('info', '[MasterService] Initializing Common table data from CSV file')
       await this.prisma.common.createMany({ data: commonData })
     } catch (error) {
-      console.error('Error initializing Common table data:', error)
+      log('error', `[MasterService] Error initializing Common table data: ${error}`)
     }
   }
 
